@@ -5,10 +5,13 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Homepage from './components/Homepage'
 import About from './pages/About'
+import AcademicPrograms from './components/AcademicPrograms'
 import Projects from './pages/Projects'
 import Services from './pages/Services'
 import Awards from './pages/Awards'
 import Contact from './pages/Contact'
+import StudioAtAGlance from './components/StudioAtAGlance'
+import Footer from './components/Footer'
 
 const App = () => {
   useEffect(() => {
@@ -52,18 +55,10 @@ const App = () => {
             <>
               <Homepage />
               <About />
-              <section id="projects">
-                <Projects />
-              </section>
-              <section id="services">
-                <Services />
-              </section>
-              <section id="awards">
-                <Awards />
-              </section>
-              <section id="contact">
-                <Contact />
-              </section>
+              <Services />
+              <AcademicPrograms />
+              <StudioAtAGlance/>
+              <Footer />
             </>
           } />
         </Routes>

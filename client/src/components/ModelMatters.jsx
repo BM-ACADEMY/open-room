@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -86,15 +87,25 @@ const ModelMatters = () => {
         ease: "sine.inOut",
       });
 
-      // Watermark movement - Optimized
-      gsap.to(".bg-watermark", {
-        x: -120,
-        force3D: true,
+      // Infinite Looping Watermark
+      const watermark = document.querySelector(".bg-watermark-wrapper");
+      if (watermark) {
+        gsap.to(watermark, {
+          xPercent: -50,
+          repeat: -1,
+          duration: 20,
+          ease: "none",
+        });
+      }
+
+      // Scroll-based speed adjustment for the loop
+      gsap.to(watermark, {
+        x: -200,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: 0.8,
+          scrub: 1.5,
         },
       });
 
@@ -113,19 +124,8 @@ const ModelMatters = () => {
         },
       });
 
-      // Pillars reveal
-      gsap.from(".pillar-item", {
-        y: 40,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: "power3.out",
-        force3D: true,
-        scrollTrigger: {
-          trigger: ".pillar-item",
-          start: "top 92%",
-        },
-      });
+      // Pillars reveal - Removed for Framer Motion reliability
+      /* GSAP animation for pillars removed to fix visibility issues */
 
       // Optimized Magnetic Effect
       const icons = document.querySelectorAll(".social-icon");
@@ -183,9 +183,17 @@ const ModelMatters = () => {
         <div className="grid-line absolute top-0 left-3/4 h-full w-[1px] bg-white/20"></div>
       </div>
 
-      {/* Background Watermark (In front of blueprints and grid) */}
-      <div className="bg-watermark absolute top-1/2 left-10 text-[12vw] font-bold text-white/[0.08] select-none pointer-events-none whitespace-nowrap z-0 uppercase tracking-tighter">
-        The Open Room Ecosystem
+      {/* Background Watermark - Infinite Loop Wrapper */}
+      <div className="bg-watermark-wrapper absolute bottom-10 md:top-1/2 md:bottom-auto left-0 flex whitespace-nowrap z-0 pointer-events-none select-none">
+        <div className="text-[15vw] md:text-[20vw] font-bold text-white/[0.04] uppercase tracking-tighter pr-20">
+          The Open Room
+        </div>
+        <div className="text-[15vw] md:text-[20vw] font-bold text-white/[0.04] uppercase tracking-tighter pr-20">
+          The Open Room
+        </div>
+        <div className="text-[15vw] md:text-[20vw] font-bold text-white/[0.04] uppercase tracking-tighter pr-20">
+          The Open Room
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10 text-center">
@@ -207,52 +215,53 @@ const ModelMatters = () => {
             — every project, every lesson, every space is designed with
             intention.
           </p>
+        </div>
 
-          {/* 'Hanging' Pillars Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 w-full max-w-7xl text-left items-start">
-            {[
-              {
-                title: "Integrated Thinking",
-                desc: "Design and education inform each other constantly.",
-                offset: "md:mt-0",
-              },
-              {
-                title: "Live Studio Learning",
-                desc: "Students work alongside real projects.",
-                offset: "md:mt-12",
-              },
-              {
-                title: "Community of Makers",
-                desc: "A growing network of architects, students & thinkers",
-                offset: "md:mt-24",
-              },
+        {/* 'Hanging' Pillars Grid - Moved Outside flex-col for better layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full max-w-7xl text-left items-start mx-auto mb-24">
+          {[
+            {
+              title: "Integrated Thinking",
+              desc: "Design and education inform each other constantly.",
+              offset: "md:mt-0",
+            },
+            {
+              title: "Live Studio Learning",
+              desc: "Students work alongside real projects.",
+              offset: "md:mt-12",
+            },
+            {
+              title: "Community of Makers",
+              desc: "A growing network of architects, students & thinkers",
+              offset: "md:mt-24",
+            },
             ].map((pillar, i) => (
-              <div
+              <motion.div
                 key={i}
-                className={`pillar-item group relative p-10 rounded-3xl border border-white/10 bg-[#161616]/90 hover:bg-[#1c1c1c] hover:border-[#c5a47e]/40 transition-all duration-700 ${pillar.offset} overflow-hidden shadow-2xl shadow-black/40`}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.15, ease: "easeOut" }}
+                className={`pillar-item group relative p-10 rounded-3xl border border-white/20 bg-white/20 hover:bg-white/[0.25] hover:border-[#c5a47e] transition-all duration-700 ${pillar.offset} overflow-hidden shadow-2xl z-20`}
               >
                 {/* Liquid Glow Highlight */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#c5a47e]/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"></div>
-                
-                {/* Refractive Top Edge */}
-                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#c5a47e]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
                 {/* Vertical Stem Anchor */}
-                <div className="absolute top-0 left-0 w-[2px] h-14 bg-[#c5a47e] origin-top scale-y-100 group-hover:h-full transition-all duration-1000 ease-out"></div>
+                <div className="absolute top-0 left-0 w-[3px] h-14 bg-[#c5a47e] origin-top scale-y-100 group-hover:h-full transition-all duration-700 ease-out"></div>
 
-                <span className="text-[11px] uppercase tracking-[0.4em] text-[#c5a47e]/50 mb-8 block font-mono">
+                <span className="text-[11px] uppercase tracking-[0.4em] text-[#c5a47e] mb-8 block font-mono">
                   Module 0{i + 1}
                 </span>
 
-                <h3 className="text-white group-hover:text-[#c5a47e] text-2xl md:text-3xl font-serif mb-6 leading-tight transition-colors duration-700">
+                <h3 className="text-white group-hover:text-[#c5a47e] text-2xl md:text-3xl font-serif mb-6 leading-tight transition-colors duration-500">
                   {pillar.title}
                 </h3>
-                <p className="text-gray-400 group-hover:text-gray-200 text-base md:text-lg font-light leading-relaxed transition-colors duration-700 max-w-[280px]">
+                <p className="text-gray-300 group-hover:text-white text-base md:text-lg font-light leading-relaxed transition-colors duration-500">
                   {pillar.desc}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 mb-16">

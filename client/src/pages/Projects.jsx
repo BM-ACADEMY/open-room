@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Projects = () => {
   return (
-    <div className="pt-32 px-12 md:px-24">
+    <div className="pt-32 px-12 md:px-24" id="projects">
       <motion.h1 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
