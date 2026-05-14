@@ -97,7 +97,7 @@ const StudioAtAGlance = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-[#eeeeee] py-24 md:py-40 font-sans text-[#1a1a1a]">
+    <section ref={containerRef} id="at-a-glance" className="bg-[#eeeeee] py-24 md:py-40 font-sans text-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         
         {/* Header Section */}

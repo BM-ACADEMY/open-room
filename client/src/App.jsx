@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -9,11 +9,13 @@ import AcademicPrograms from './components/AcademicPrograms'
 import Projects from './pages/Projects'
 import Services from './pages/Services'
 import Awards from './pages/Awards'
-import Contact from './pages/Contact'
 import StudioAtAGlance from './components/StudioAtAGlance'
 import Footer from './components/Footer'
+import EnquiryForm from './components/EnquiryForm'
 
 const App = () => {
+  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -50,15 +52,16 @@ const App = () => {
   return (
     <Router>
       <div className="bg-white min-h-screen">
+        <EnquiryForm isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
         <Routes>
           <Route path="/" element={
             <>
-              <Homepage />
+              <Homepage onEnquiryClick={() => setIsEnquiryOpen(true)} />
               <About />
               <Services />
               <AcademicPrograms />
               <StudioAtAGlance/>
-              <Footer />
+              <Footer onEnquiryClick={() => setIsEnquiryOpen(true)} />
             </>
           } />
         </Routes>

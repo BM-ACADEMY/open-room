@@ -26,7 +26,7 @@ const AcademicPrograms = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-[#f8f7f5] min-h-screen py-20 md:py-32 font-sans text-[#1a1a1a] overflow-hidden">
+    <section ref={containerRef} className="bg-[#f8f7f5] min-h-screen py-20 md:py-32 font-sans text-[#1a1a1a] overflow-hidden" id="programs">
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         
         {/* Main Header Section */}

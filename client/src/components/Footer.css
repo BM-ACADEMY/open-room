@@ -18,32 +18,19 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
+  width: 45%;
   height: 100%;
-  background-image: url("/assets/footer.png");
-  background-size: cover;
+  background-image: url("../assets/footer.png");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
   background-position: left top;
-  opacity: 1;
+  
   z-index: 1;
-}
-
-.footer-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 1) 60%
-  );
-  z-index: 2;
-  pointer-events: none;
 }
 
 .footer-content {
   position: relative;
+  
   z-index: 3;
   max-width: 1440px;
   margin: 0 auto;
@@ -62,12 +49,11 @@
   margin-bottom: 80px;
 }
 
-.footer-logo {
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  margin-bottom: 20px;
-  color: #fff;
+.footer-logo-img {
+  height: 60px;
+  width: auto;
+  margin-bottom: 25px;
+  filter: brightness(0) invert(1); /* Ensure it's white on black if it's a dark logo */
 }
 
 .footer-tagline {
@@ -101,7 +87,7 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   margin-bottom: 25px;
-  color: #666;
+  color: #d8d3d3;
 }
 
 .footer-links ul {
@@ -114,14 +100,19 @@
   margin-bottom: 12px;
 }
 
-.footer-links a {
+.footer-links a, .footer-link-btn {
   color: #fff;
   text-decoration: none;
   font-size: 0.95rem;
   transition: color 0.3s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.footer-links a:hover {
+.footer-links a:hover, .footer-link-btn:hover {
   color: #a0a0a0;
 }
 
@@ -171,13 +162,14 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid #222;
+  border-top: 1px solid #333;
   padding-top: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
-  color: #666;
+  color: #999; /* Brightened from #666 */
+  letter-spacing: 0.05em;
 }
 
 .footer-legal {

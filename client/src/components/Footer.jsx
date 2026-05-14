@@ -1,25 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Footer.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Footer = () => {
+import logo from '../assets/logo.png';
+
+const Footer = ({ onEnquiryClick }) => {
   const footerRef = useRef(null);
   const contentRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+      // Create a reveal animation for the footer content
       gsap.from(contentRef.current.children, {
-        y: 50,
+        y: 40,
         opacity: 0,
         duration: 1,
-        stagger: 0.1,
+        stagger: 0.15,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: footerRef.current,
-          start: 'top 80%',
+          start: 'top 90%', // Trigger earlier
+          toggleActions: 'play none none reverse'
         }
       });
     }, footerRef);
@@ -30,30 +34,28 @@ const Footer = () => {
   return (
     <footer className="footer-container" ref={footerRef}>
       <div className="footer-image-layer"></div>
-      <div className="footer-overlay"></div>
       
       <div className="footer-content" ref={contentRef}>
         <div className="footer-grid">
           <div className="footer-brand">
-            <h2 className="footer-logo">THE OPEN ROOM</h2>
+            <img src={logo} alt="THE OPEN ROOM" className="footer-logo-img" />
             <p className="footer-tagline">
               Elevating architectural education and professional practice through immersive studio experiences.
             </p>
             <div className="footer-socials">
               <a href="#" className="social-link">Instagram</a>
               <a href="#" className="social-link">LinkedIn</a>
-              <a href="#" className="social-link">Behance</a>
             </div>
           </div>
 
           <div className="footer-links">
             <h3 className="footer-heading">Navigate</h3>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About Studio</a></li>
-              <li><a href="/programs">Academic Programs</a></li>
-              <li><a href="/projects">Design Portfolio</a></li>
-              <li><a href="/contact">Connect</a></li>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">What We Do</a></li>
+              <li><a href="#services">Our Services</a></li>
+              <li><a href="#at-a-glance">Studio At A Glance</a></li>
+              <li><button onClick={onEnquiryClick} className="footer-link-btn">Enquiry</button></li>
             </ul>
           </div>
 
@@ -67,7 +69,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="footer-contact">
+          <div className="footer-contact" id="contact">
             <h3 className="footer-heading">Connect</h3>
             <p className="footer-contact-item">
               <span className="label">EMAIL</span>
@@ -81,11 +83,6 @@ const Footer = () => {
                 Chennai – 600 044
               </span>
             </p>
-            <p className="footer-contact-item">
-              <span className="label">WEBSITE</span>
-              <a href="https://theopenroom.in" target="_blank" rel="noopener noreferrer">theopenroom.in</a>
-            </p>
-            <button className="footer-cta">Get Started</button>
           </div>
         </div>
 

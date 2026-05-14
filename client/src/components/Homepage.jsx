@@ -26,7 +26,7 @@ const slides = [
   }
 ];
 
-const Homepage = () => {
+const Homepage = ({ onEnquiryClick }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,44 +62,49 @@ const Homepage = () => {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-white text-[#1a1a1a] font-sans selection:bg-gold selection:text-white">
+    <div ref={containerRef} id="home" className="min-h-screen bg-white text-[#1a1a1a] font-sans selection:bg-gold selection:text-white">
       {/* Top Navigation */}
       <motion.nav 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 w-full h-24 flex justify-between items-center px-12 md:px-24 z-[110] transition-all duration-500 border-b ${
-          isScrolled || isMenuOpen ? 'bg-white border-gray-100 h-20' : 'bg-transparent border-transparent h-24'
+        className={`fixed top-0 left-0 w-full h-24 flex justify-between items-center px-12 md:px-24 z-[110] transition-all duration-500 ${
+          isScrolled && !isMenuOpen ? 'bg-white h-20' : 'bg-transparent h-24'
         }`}
       >
-        <div className="flex items-center gap-8 relative z-[120]">
+        <div className={`flex items-center gap-8 relative z-[120] transition-opacity duration-500 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           <img 
-            src={isScrolled || isMenuOpen ? "/assets/Logo/LOGO -15.png" : "/assets/Logo/LOGO -17.png"} 
+            src={isScrolled ? "/assets/Logo/LOGO -15.png" : "/assets/Logo/LOGO -17.png"} 
             alt="Logo" 
             className="h-14 w-auto transition-all duration-500"
           />
         </div>
 
-        <div 
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="relative w-8 h-8 cursor-pointer group z-[120] flex items-center justify-center"
-        >
-          <motion.div 
-            animate={isMenuOpen 
-              ? { rotate: 45, y: 0, backgroundColor: '#000' } 
-              : { rotate: 0, y: -4, backgroundColor: isScrolled ? '#000' : '#fff' }
-            }
-            className="absolute w-7 h-[1px] transition-colors duration-500"
-          ></motion.div>
-          <motion.div 
-            animate={isMenuOpen 
-              ? { rotate: -45, y: 0, width: '1.75rem', backgroundColor: '#000' } 
-              : { rotate: 0, y: 4, width: '1rem', backgroundColor: isScrolled ? '#000' : '#fff' }
-            }
-            className="absolute right-0 h-[1px] transition-colors duration-500"
-          ></motion.div>
-        </div>
+
       </motion.nav>
+
+      {/* Stable Toggle Button */}
+      <div 
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        className={`fixed top-6 right-8 md:top-8 md:right-12 cursor-pointer group z-[150] flex items-center justify-center transition-all duration-500 rounded-full ${
+          isMenuOpen ? 'w-14 h-14 bg-black shadow-xl' : 'w-10 h-10 bg-transparent'
+        }`}
+      >
+        <motion.div 
+          animate={isMenuOpen 
+            ? { rotate: 45, y: 0, backgroundColor: '#ffffff' } 
+            : { rotate: 0, y: -4, backgroundColor: isScrolled ? '#000000' : (isMenuOpen ? '#ffffff' : '#ffffff') }
+          }
+          className={`absolute w-7 h-0.5 transition-colors duration-500 ${!isMenuOpen && !isScrolled ? 'bg-white' : ''}`}
+        ></motion.div>
+        <motion.div 
+          animate={isMenuOpen 
+            ? { rotate: -45, y: 0, width: '1.75rem', backgroundColor: '#ffffff' } 
+            : { rotate: 0, y: 4, width: '1rem', backgroundColor: isScrolled ? '#000000' : (isMenuOpen ? '#ffffff' : '#ffffff') }
+          }
+          className={`absolute right-auto h-0.5 transition-colors duration-500 ${!isMenuOpen && !isScrolled ? 'bg-white' : ''}`}
+        ></motion.div>
+      </div>
 
       {/* Full Screen Menu Overlay */}
       <AnimatePresence>
@@ -109,33 +114,39 @@ const Homepage = () => {
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 bg-white z-[100] flex flex-col px-12 md:px-24 overflow-y-auto pt-40 pb-20"
+            className="fixed inset-0 bg-white z-[100] flex flex-col px-12 md:px-24 overflow-hidden pt-20 pb-12"
           >
-            <div className="container mx-auto flex flex-col justify-between min-h-full">
-              <div className="flex flex-col gap-6 md:gap-8 max-w-4xl">
-              {['Home', 'About', 'Projects', 'Services', 'Awards', 'Contact'].map((item, idx) => (
+            <div className="container mx-auto flex flex-col justify-center h-full pb-20 md:pb-0">
+              <div className="flex flex-col gap-4 md:gap-6 max-w-4xl">
+              {[
+                { name: 'Home', id: 'home' },
+                { name: 'WHAT WE DO', id: 'about' },
+                { name: 'Our Services', id: 'services' },
+                { name: 'STUDIO AT A GLANCE', id: 'at-a-glance' },
+                { name: 'Contact', id: 'contact' },
+                { name: 'Enquiry', id: 'enquiry' }
+              ].map((item, idx) => (
                 <motion.div
-                  key={item}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + (idx * 0.1) }}
-                  className="group cursor-pointer flex items-start gap-4 md:gap-8"
+                  key={item.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 + (idx * 0.1) }}
+                  className="group cursor-pointer flex items-center gap-4 md:gap-8"
                   onClick={() => {
                     setIsMenuOpen(false);
-                    const id = item.toLowerCase();
-                    if (id === 'home') {
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (item.id === 'enquiry') {
+                      onEnquiryClick();
                     } else {
-                      const element = document.getElementById(id);
+                      const element = document.getElementById(item.id);
                       if (element) {
                         element.scrollIntoView({ behavior: 'smooth' });
                       }
                     }
                   }}
                 >
-                  <span className="text-gold text-[10px] font-bold tracking-widest mt-4 md:mt-8">0{idx + 1}</span>
-                  <h2 className="text-5xl md:text-8xl font-serif leading-tight group-hover:pl-6 transition-all duration-500 group-hover:text-gold flex items-baseline">
-                    {item}
+                  <span className="text-gold text-[10px] font-bold tracking-widest opacity-50">0{idx + 1}</span>
+                  <h2 className="text-3xl md:text-6xl font-serif leading-tight group-hover:pl-4 transition-all duration-500 group-hover:text-gold flex items-baseline uppercase">
+                    {item.name}
                   </h2>
                 </motion.div>
               ))}
@@ -147,14 +158,13 @@ const Homepage = () => {
                 <div className="flex gap-6 text-[10px] font-bold tracking-widest uppercase">
                   <span className="hover:text-gold cursor-pointer transition-colors">Instagram</span>
                   <span className="hover:text-gold cursor-pointer transition-colors">Twitter</span>
-                  <span className="hover:text-gold cursor-pointer transition-colors">Behance</span>
                 </div>
               </div>
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">Inquiries</div>
-                <div className="text-[10px] font-bold tracking-widest uppercase hover:text-gold cursor-pointer transition-colors">
-                  hello@openroom.architecture
-                </div>
+                <a href="mailto:info@theopenroom.in" className="text-[10px] font-bold tracking-widest uppercase hover:text-gold transition-colors block">
+                  info@theopenroom.in
+                </a>
               </div>
             </div>
           </div>
@@ -210,38 +220,24 @@ const Homepage = () => {
             </p>
             
             <div className="flex flex-wrap items-center gap-6 md:gap-8">
-              <button className="group relative px-10 py-5 bg-gold overflow-hidden transition-all duration-500 hover:bg-white">
+              <button 
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-10 py-5 bg-gold overflow-hidden transition-all duration-500 hover:bg-white"
+              >
                 <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.4em] text-white group-hover:text-black transition-colors">
-                  View Projects
+                  Our Services
                 </span>
               </button>
               
-              <button className="group relative px-10 py-5 border border-white/30 overflow-hidden transition-all duration-500 hover:border-gold">
+              <button 
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-10 py-5 border border-white/30 overflow-hidden transition-all duration-500 hover:border-gold"
+              >
                 <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.4em] text-white transition-colors">
                   Explore Studio
                 </span>
               </button>
-              
-              <div 
-                className="flex items-center gap-5 group cursor-pointer ml-4 md:ml-8" 
-                onClick={nextSlide}
-              >
-                <div className="relative w-12 h-12 rounded-full border border-white/20 flex items-center justify-center overflow-hidden transition-all duration-500 group-hover:border-gold">
-                   <div className="absolute inset-0 bg-gold -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="relative z-10 group-hover:text-white transition-colors">
-                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[8px] font-bold tracking-[0.2em] uppercase text-gray-400 group-hover:text-gold transition-colors">
-                    Discover
-                  </span>
-                  <span className="text-[9px] font-bold tracking-[0.3em] uppercase">
-                    Next Story
-                  </span>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
