@@ -10,150 +10,62 @@ const ModelMatters = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Main text reveal - Optimized (Removed blur for performance)
-      gsap.from(".reveal-text", {
-        y: 60,
+      // Heading Reveal
+      const headingLines = sectionRef.current.querySelectorAll(".mm-reveal-line");
+      headingLines.forEach((line, i) => {
+        gsap.from(line, {
+          y: 50,
+          opacity: 0,
+          duration: 1.2,
+          ease: "power3.out",
+          delay: i * 0.1,
+          scrollTrigger: {
+            trigger: line,
+            start: "top 95%",
+            once: true
+          },
+        });
+      });
+
+      // Paragraph Reveal
+      gsap.from(".mm-reveal-para", {
+        y: 30,
         opacity: 0,
-        skewY: 3,
         duration: 1.5,
-        ease: "power4.out",
-        stagger: 0.1,
-        force3D: true, // Hardware acceleration
+        ease: "power2.out",
         scrollTrigger: {
-          trigger: ".reveal-text",
+          trigger: ".mm-reveal-para",
           start: "top 90%",
+          once: true
         },
       });
 
-      // Animate the gold underline
-      gsap.from(".model-underline", {
-        scaleX: 0,
-        transformOrigin: "left",
-        duration: 1.2,
-        ease: "power3.inOut",
-        delay: 0.4,
-        force3D: true,
-        scrollTrigger: {
-          trigger: ".reveal-text",
-          start: "top 85%",
-        },
-      });
 
-      // Architectural Grid Drawing - Optimized
-      gsap.from(".grid-line", {
-        scaleY: 0,
-        transformOrigin: "top",
-        duration: 1.5,
-        stagger: 0.2,
-        ease: "power2.inOut",
-        force3D: true,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-        }
-      });
-
-      // Background blueprints - Optimized scrubbing
-      gsap.to(".bg-blueprint-left", {
-        y: -100,
-        rotation: 4,
-        force3D: true,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1, // Faster scrub = less lag
-        },
-      });
-
-      gsap.to(".bg-blueprint-right", {
-        y: 100,
-        rotation: -4,
-        force3D: true,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-
-      // Subtle float animation - Lightweight
-      gsap.to(".bg-blueprint-left, .bg-blueprint-right", {
-        y: "+=15",
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
 
       // Infinite Looping Watermark
-      const watermark = document.querySelector(".bg-watermark-wrapper");
+      const watermark = sectionRef.current.querySelector(".bg-watermark-wrapper");
       if (watermark) {
         gsap.to(watermark, {
           xPercent: -50,
           repeat: -1,
-          duration: 20,
+          duration: 30,
           ease: "none",
         });
       }
 
-      // Scroll-based speed adjustment for the loop
-      gsap.to(watermark, {
-        x: -200,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        },
-      });
-
-      // Social icons reveal
-      gsap.from(".social-icon", {
-        scale: 0,
+      // Pillars staggered reveal
+      gsap.from(".mm-pillar-item", {
+        y: 50,
         opacity: 0,
-        y: 30,
         duration: 1,
-        stagger: 0.08,
-        ease: "back.out(1.5)",
-        force3D: true,
+        stagger: 0.15,
+        ease: "power3.out",
         scrollTrigger: {
-          trigger: ".social-icon",
-          start: "top 95%",
+          trigger: ".mm-pillars-grid",
+          start: "top 90%",
+          once: true
         },
       });
-
-      // Pillars reveal - Removed for Framer Motion reliability
-      /* GSAP animation for pillars removed to fix visibility issues */
-
-      // Optimized Magnetic Effect
-      const icons = document.querySelectorAll(".social-icon");
-      icons.forEach((icon) => {
-        icon.addEventListener("mousemove", (e) => {
-          const rect = icon.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-
-          gsap.to(icon, {
-            x: x * 0.3,
-            y: y * 0.3,
-            duration: 0.4,
-            ease: "power1.out",
-            overwrite: "auto", // Prevent animation conflicts
-          });
-        });
-
-        icon.addEventListener("mouseleave", () => {
-          gsap.to(icon, {
-            x: 0,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-          });
-        });
-      });
-
     }, sectionRef);
 
     return () => ctx.revert();
@@ -162,137 +74,92 @@ const ModelMatters = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0f0f0f] text-white pt-24 pb-16 md:pt-32 md:pb-20 px-8 md:px-24 relative overflow-hidden flex flex-col justify-center border-t border-white/5"
+      className="bg-[#fbf9e3] text-black py-20 md:py-32 px-8 md:px-24 relative overflow-hidden flex flex-col justify-center border-t border-black/5"
     >
-      {/* Background Blueprints (Absolute Back) */}
-      <img
-        src="/assets/background/left.png"
-        alt="blueprint left"
-        className="bg-blueprint-left absolute left-[-5%] top-[15%] w-[40%] opacity-15 pointer-events-none select-none z-0 grayscale"
-      />
-      <img
-        src="/assets/background/right.png"
-        alt="blueprint right"
-        className="bg-blueprint-right absolute right-[-5%] bottom-[15%] w-[45%] opacity-15 pointer-events-none select-none z-0 grayscale"
-      />
-
-      {/* Architectural Grid Lines */}
-      <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-        <div className="grid-line absolute top-0 left-1/4 h-full w-[1px] bg-white/20"></div>
-        <div className="grid-line absolute top-0 left-2/4 h-full w-[1px] bg-white/20"></div>
-        <div className="grid-line absolute top-0 left-3/4 h-full w-[1px] bg-white/20"></div>
-      </div>
-
-      {/* Background Watermark - Infinite Loop Wrapper */}
-      <div className="bg-watermark-wrapper absolute bottom-10 md:top-1/2 md:bottom-auto left-0 flex whitespace-nowrap z-0 pointer-events-none select-none">
-        <div className="text-[15vw] md:text-[20vw] font-bold text-white/[0.04] uppercase tracking-tighter pr-20">
-          The Open Room
-        </div>
-        <div className="text-[15vw] md:text-[20vw] font-bold text-white/[0.04] uppercase tracking-tighter pr-20">
-          The Open Room
-        </div>
-        <div className="text-[15vw] md:text-[20vw] font-bold text-white/[0.04] uppercase tracking-tighter pr-20">
-          The Open Room
-        </div>
+      {/* Background Watermark */}
+      <div className="bg-watermark-wrapper absolute top-1/2 left-0 flex whitespace-nowrap z-0 pointer-events-none select-none opacity-[0.03]">
+        {[1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="text-[15vw] md:text-[20vw] font-bold uppercase tracking-tighter pr-20"
+          >
+            The Open Room
+          </div>
+        ))}
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10 text-center">
-        <div className="mb-20 flex flex-col items-center">
-          <h2 className="reveal-text text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-8 relative inline-block">
-            Why This{" "}
-            <span className="text-[#c5a47e] italic font-serif relative inline-block">
-              Model Matters
-              <span className="model-underline absolute bottom-0 left-0 h-[2px] md:h-[4px] bg-[#c5a47e] w-full"></span>
-            </span>
+        <div className="mb-24 flex flex-col items-center">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-12 block"
+          >
+            Our Philosophy
+          </motion.span>
+
+          <h2 className="text-5xl md:text-8xl font-serif mb-16 leading-[1.2] tracking-tight text-black perspective-1000">
+            <div className="overflow-hidden pb-4 mb-2">
+              <span className="mm-reveal-line block">Why this</span>
+            </div>
+            <div className="overflow-hidden pb-4">
+              <span className="mm-reveal-line block italic font-light text-[#ff4041]">
+                model matters.
+              </span>
+            </div>
           </h2>
-          <p className="reveal-text text-gray-400 text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto mb-12">
-            In a country where architecture education and professional practice
-            remain largely siloed, The Open Room bridges that divide. Students
-            learn within a live studio environment. Professionals grow by
-            engaging with curious minds. Clients benefit from a team that is
-            constantly evolving, researching, and thinking critically about
-            space, design, and the built environment. Nothing here is accidental
-            — every project, every lesson, every space is designed with
-            intention.
-          </p>
+
+          <div className="max-w-4xl mx-auto text-center overflow-hidden">
+            <p className="mm-reveal-para text-black/70 text-lg md:text-2xl leading-relaxed font-light">
+              In a country where architecture education and professional
+              practice remain largely siloed, The Open Room bridges that divide.
+              Students learn within a live studio environment. Professionals
+              grow by engaging with curious minds. Clients benefit from a team
+              that is constantly evolving, researching, and thinking critically
+              about space, design, and the built environment.
+            </p>
+          </div>
         </div>
 
-        {/* 'Hanging' Pillars Grid - Moved Outside flex-col for better layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full max-w-7xl text-left items-start mx-auto mb-24">
+        {/* Pillars Grid */}
+        <div className="mm-pillars-grid grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl text-left items-start mx-auto">
           {[
             {
               title: "Integrated Thinking",
-              desc: "Design and education inform each other constantly.",
-              offset: "md:mt-0",
+              desc: "Design and education inform each other constantly, ensuring every project is backed by research.",
+              num: "01",
             },
             {
               title: "Live Studio Learning",
-              desc: "Students work alongside real projects.",
-              offset: "md:mt-12",
+              desc: "Students work alongside real projects, gaining practical experience that traditional classrooms can't provide.",
+              num: "02",
             },
             {
               title: "Community of Makers",
-              desc: "A growing network of architects, students & thinkers",
-              offset: "md:mt-24",
+              desc: "A growing network of architects, students, and thinkers pushing the boundaries of built form.",
+              num: "03",
             },
-            ].map((pillar, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.15, ease: "easeOut" }}
-                className={`pillar-item group relative p-10 rounded-3xl border border-white/20 bg-white/20 hover:bg-white/[0.25] hover:border-[#c5a47e] transition-all duration-700 ${pillar.offset} overflow-hidden shadow-2xl z-20`}
-              >
-                {/* Liquid Glow Highlight */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#c5a47e]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                {/* Vertical Stem Anchor */}
-                <div className="absolute top-0 left-0 w-[3px] h-14 bg-[#c5a47e] origin-top scale-y-100 group-hover:h-full transition-all duration-700 ease-out"></div>
-
-                <span className="text-[11px] uppercase tracking-[0.4em] text-[#c5a47e] mb-8 block font-mono">
-                  Module 0{i + 1}
-                </span>
-
-                <h3 className="text-white group-hover:text-[#c5a47e] text-2xl md:text-3xl font-serif mb-6 leading-tight transition-colors duration-500">
-                  {pillar.title}
-                </h3>
-                <p className="text-gray-300 group-hover:text-white text-base md:text-lg font-light leading-relaxed transition-colors duration-500">
-                  {pillar.desc}
-                </p>
-              </motion.div>
-            ))}
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
-          {["IG", "TW", "FB", "WS"].map((social) => (
+          ].map((pillar, i) => (
             <div
-              key={social}
-              className="social-icon w-14 h-14 md:w-20 md:h-20 rounded-full border border-white/10 flex items-center justify-center text-sm md:text-base font-medium hover:bg-[#c5a47e] hover:text-white hover:border-[#c5a47e] hover:scale-110 transition-all duration-500 cursor-pointer group overflow-hidden relative"
+              key={i}
+              className="mm-pillar-item group relative p-10 md:p-12 rounded-sm bg-[#ff4041] shadow-[0_20px_50px_rgba(255,64,65,0.15)] hover:shadow-[0_40px_80px_rgba(255,64,65,0.25)] border border-white/10"
             >
-              <span className="relative z-10">{social}</span>
-              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <span className="text-[10px] font-bold text-white/60 mb-6 block tracking-[0.4em]">
+                PILLAR {pillar.num}
+              </span>
+
+              <h3 className="text-white text-2xl md:text-3xl font-serif mb-6 leading-tight">
+                {pillar.title}
+              </h3>
+              <p className="text-white/80 text-base md:text-lg font-light leading-relaxed">
+                {pillar.desc}
+              </p>
             </div>
           ))}
         </div>
 
-        <div className="reveal-text flex flex-col md:flex-row gap-4 md:gap-8 justify-center text-sm md:text-base font-mono tracking-wider opacity-60 hover:opacity-100 transition-opacity">
-          <a
-            href="mailto:info@theopenroom.in"
-            className="hover:text-[#c5a47e] transition-colors relative group"
-          >
-            info@theopenroom.in
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#c5a47e] group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <span className="hidden md:inline text-white/20">|</span>
-          <a
-            href="#contact"
-            className="hover:text-[#c5a47e] transition-colors uppercase relative group"
-          >
-            Get in Touch
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#c5a47e] group-hover:w-full transition-all duration-300"></span>
-          </a>
-        </div>
+
       </div>
     </section>
   );

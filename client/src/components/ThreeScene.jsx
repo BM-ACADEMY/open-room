@@ -138,4 +138,4 @@ const ThreeScene = () => {
   );
 };
 
-export default ThreeScene;
+export default React.memo(ThreeScene);

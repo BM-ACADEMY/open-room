@@ -24,7 +24,8 @@
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: left top;
-  
+  opacity: 1;
+  filter: brightness(2);
   z-index: 1;
 }
 
@@ -50,10 +51,9 @@
 }
 
 .footer-logo-img {
-  height: 60px;
+  height: 90px;
   width: auto;
   margin-bottom: 25px;
-  filter: brightness(0) invert(1); /* Ensure it's white on black if it's a dark logo */
 }
 
 .footer-tagline {
@@ -194,7 +194,7 @@
   }
   .footer-image-layer {
     width: 100%;
-    opacity: 0.1;
+    opacity: 0.25;
   }
 }
 

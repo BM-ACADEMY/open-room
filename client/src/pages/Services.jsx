@@ -1,5 +1,8 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const servicesData = [
   {
@@ -40,104 +43,43 @@ const servicesData = [
   }
 ];
 
-const ServiceCard = ({ service, index, total }) => {
-  const cardRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "start start", "end end", "end start"]
-  });
-
-  // New Stack Style: Scale down and move up as we are covered
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.9, 1, 0.95, 0.9]);
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [100, 0, -20, -40]);
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0.8]);
-
-  return (
-    <div 
-      ref={cardRef}
-      className="sticky top-48 w-full max-w-[1000px] flex justify-center mb-[20vh]"
-      style={{ 
-        zIndex: index + 1
-      }}
-    >
-      <motion.div 
-        style={{ scale, y, opacity }}
-        className="bg-[#ff4041] p-8 md:p-12 text-white w-full h-[40vh] md:h-[45vh] relative overflow-hidden shadow-2xl flex flex-col justify-center border border-white/10"
-      >
-        {/* Service Number Background */}
-        <div className="absolute top-0 right-0 text-[10vw] font-bold text-white/20 select-none pointer-events-none translate-y-[-10%] translate-x-[5%]">
-          {service.number}
-        </div>
-
-        <div className="relative z-10">
-          <motion.h3 
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-2xl md:text-4xl font-bold mb-2 tracking-tight"
-          >
-            {service.title}
-          </motion.h3>
-          <motion.p 
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 0.9 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-base md:text-lg italic mb-6 font-serif"
-          >
-            {service.subtitle}
-          </motion.p>
-          
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="w-full h-[1px] bg-white/20 mb-6 origin-left"
-          />
-          
-          <motion.p 
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 0.9 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="text-sm md:text-lg font-light leading-relaxed max-w-3xl"
-          >
-            {service.description}
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 flex justify-end"
-          >
-            <button className="group/btn flex items-center gap-4 text-[9px] font-bold uppercase tracking-[0.3em] hover:gap-6 transition-all duration-300">
-              <span>Explore</span>
-              <div className="w-8 h-[1px] bg-white transition-all group-hover/btn:w-12"></div>
-            </button>
-          </motion.div>
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 const Services = () => {
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.service-stacking-card');
+      
+      cards.forEach((card, index) => {
+        if (index === cards.length - 1) return;
+        
+        gsap.to(card, {
+          yPercent: -10,
+          xPercent: -15,
+          scale: 0.85,
+          opacity: 0,
+          rotation: -8,
+          filter: "blur(15px)",
+          scrollTrigger: {
+            trigger: cards[index + 1],
+            start: "top 70%", // Start blurring when next card is in the middle
+            end: "top 20%",
+            scrub: 1,
+            onEnter: () => gsap.set(card, { pointerEvents: 'none' }),
+            onLeaveBack: () => gsap.set(card, { pointerEvents: 'auto' }),
+          }
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section ref={containerRef} className="relative bg-[#fbf9e3] z-10 scroll-mt-24 pb-40" id="services">
       {/* Intro Header */}
       <div className="pt-48 pb-20 px-6 md:px-24 max-w-[1400px]">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: "power3.out" }}
-        >
+        <div>
           <div className="flex items-center gap-4 mb-8">
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.5em]">Our Services</span>
             <div className="w-12 h-[1px] bg-[#ff4041]/30"></div>
@@ -154,19 +96,47 @@ const Services = () => {
               creative design, technical rigour, and seamless execution under one roof.
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Stacking Cards Container */}
       <div className="flex flex-col items-center px-6 md:px-24">
-        {servicesData.map((service, index) => (
-          <ServiceCard 
-            key={index} 
-            service={service} 
-            index={index} 
-            total={servicesData.length} 
-          />
-        ))}
+        <div className="w-full max-w-6xl flex flex-col gap-4">
+          {servicesData.map((service, index) => (
+            <div 
+              key={index}
+              className="service-stacking-card sticky top-32 w-full bg-[#ff4041] p-10 md:p-16 text-white min-h-[40vh] md:min-h-[45vh] shadow-2xl relative overflow-hidden flex flex-col justify-center border border-white/10"
+              style={{ zIndex: index + 1 }}
+            >
+              {/* Service Number Background */}
+              <div className="absolute top-0 right-0 text-[10vw] font-bold text-white/15 select-none pointer-events-none translate-y-[-10%] translate-x-[5%]">
+                {service.number}
+              </div>
+
+              <div className="relative z-10">
+                <h3 className="text-2xl md:text-4xl font-bold mb-2 tracking-tight">
+                  {service.title}
+                </h3>
+                <p className="text-base md:text-lg italic mb-6 font-serif opacity-90">
+                  {service.subtitle}
+                </p>
+                
+                <div className="w-full h-[1px] bg-white/20 mb-6" />
+                
+                <p className="text-sm md:text-lg font-light leading-relaxed max-w-3xl opacity-90">
+                  {service.description}
+                </p>
+                
+                <div className="mt-8 flex justify-end">
+                  <button className="group/btn flex items-center gap-4 text-[9px] font-bold uppercase tracking-[0.3em] hover:gap-6 transition-all duration-300">
+                    <span>Explore Service</span>
+                    <div className="w-8 h-[1px] bg-white transition-all group-hover/btn:w-12"></div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -5,7 +5,13 @@ import './Footer.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-import logo from '../assets/logo.png';
+const navLinks = [
+  { name: 'About', id: 'about' },
+  { name: 'Services', id: 'services' },
+  { name: 'Our Team', id: 'governance' },
+  { name: 'NATA Coaching', id: 'programs' },
+  { name: 'Contact', id: 'contact' },
+];
 
 const Footer = ({ onEnquiryClick }) => {
   const footerRef = useRef(null);
@@ -13,7 +19,6 @@ const Footer = ({ onEnquiryClick }) => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Create a reveal animation for the footer content
       gsap.from(contentRef.current.children, {
         y: 40,
         opacity: 0,
@@ -22,7 +27,7 @@ const Footer = ({ onEnquiryClick }) => {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: footerRef.current,
-          start: 'top 90%', // Trigger earlier
+          start: 'top 90%',
           toggleActions: 'play none none reverse'
         }
       });
@@ -31,6 +36,19 @@ const Footer = ({ onEnquiryClick }) => {
     return () => ctx.revert();
   }, []);
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <footer className="footer-container" ref={footerRef}>
       <div className="footer-image-layer"></div>
@@ -38,55 +56,59 @@ const Footer = ({ onEnquiryClick }) => {
       <div className="footer-content" ref={contentRef}>
         <div className="footer-grid">
           <div className="footer-brand">
-            <img src={logo} alt="THE OPEN ROOM" className="footer-logo-img" />
+            <img src="/assets/Logo/LOGO -14.png" alt="THE OPEN ROOM" className="footer-logo-img" />
             <p className="footer-tagline">
               Elevating architectural education and professional practice through immersive studio experiences.
             </p>
             <div className="footer-socials">
-              <a href="#" className="social-link">Instagram</a>
-              <a href="#" className="social-link">LinkedIn</a>
+              <a href="https://www.instagram.com/_theopenroom.in?igsh=MTY0YW5hZnRveWhmNA%3D%3D" target="_blank" rel="noopener noreferrer" className="social-link">Instagram</a>
+            
             </div>
           </div>
 
           <div className="footer-links">
-            <h3 className="footer-heading">Navigate</h3>
+            <h3 className="footer-heading">Studio</h3>
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">What We Do</a></li>
-              <li><a href="#services">Our Services</a></li>
-              <li><a href="#at-a-glance">Studio At A Glance</a></li>
-              <li><button onClick={onEnquiryClick} className="footer-link-btn">Enquiry</button></li>
+              {navLinks.slice(0, 3).map((link) => (
+                <li key={link.name}>
+                  <button onClick={() => scrollToSection(link.id)} className="footer-link-btn">
+                    {link.name}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="footer-links">
-            <h3 className="footer-heading">Programs</h3>
+            <h3 className="footer-heading">Company</h3>
             <ul>
-              <li><a href="#">Foundation Studio</a></li>
-              <li><a href="#">Advanced Design</a></li>
-              <li><a href="#">Digital Fabrication</a></li>
-              <li><a href="#">Urban Research</a></li>
+              {navLinks.slice(3).map((link) => (
+                <li key={link.name}>
+                  <button onClick={() => scrollToSection(link.id)} className="footer-link-btn">
+                    {link.name}
+                  </button>
+                </li>
+              ))}
+              <li><button onClick={onEnquiryClick} className="footer-link-btn font-bold text-[#ff4041]">Enquiry</button></li>
             </ul>
           </div>
 
           <div className="footer-contact" id="contact">
             <h3 className="footer-heading">Connect</h3>
-            <p className="footer-contact-item">
-              <span className="label">EMAIL</span>
+            <div className="footer-contact-item">
               <a href="mailto:info@theopenroom.in">info@theopenroom.in</a>
-            </p>
-            <p className="footer-contact-item">
-              <span className="label">ADDRESS</span>
+            </div>
+            <div className="footer-contact-item">
               <span>
                 8th Floor, Tower A, Featherlite The Address,<br />
                 200 Feet Radial Road, Zamin Pallavaram,<br />
                 Chennai – 600 044
               </span>
-            </p>
+            </div>
           </div>
         </div>
 
-        <div className="footer-bottom">
+        <div className="footer-bottom border-t border-black/5 pt-10 mt-20">
           <p>&copy; {new Date().getFullYear()} The Open Room. All rights reserved.</p>
           <div className="footer-legal">
             <a href="#">Privacy Policy</a>

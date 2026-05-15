@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Homepage from './components/Homepage'
 import About from './pages/About'
 import AcademicPrograms from './components/AcademicPrograms'
+import MeetOurTeam from './components/MeetOurTeam'
 import Projects from './pages/Projects'
 import Services from './pages/Services'
 import Awards from './pages/Awards'
@@ -38,10 +39,6 @@ const App = () => {
 
     lenis.on('scroll', ScrollTrigger.update)
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000)
-    })
-
     gsap.ticker.lagSmoothing(0)
 
     return () => {
@@ -51,7 +48,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="bg-white min-h-screen">
+      <div className="bg-white min-h-screen overflow-x-hidden">
         <EnquiryForm isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
         <Routes>
           <Route path="/" element={
@@ -60,7 +57,8 @@ const App = () => {
               <Services />
               <About />
               <AcademicPrograms />
-              <StudioAtAGlance/>
+              <MeetOurTeam />
+              {/* <StudioAtAGlance/> */}
               <Footer onEnquiryClick={() => setIsEnquiryOpen(true)} />
             </>
           } />
@@ -71,5 +69,3 @@ const App = () => {
 }
 
 export default App;
-
-

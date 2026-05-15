@@ -10,15 +10,49 @@ const AcademicPrograms = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".reveal-item", {
+      // Heading Mask Reveal
+      const headingLines = containerRef.current.querySelectorAll(".reveal-line");
+      headingLines.forEach((line, i) => {
+        gsap.from(line, {
+          yPercent: 100,
+          rotateX: 45,
+          opacity: 0,
+          duration: 1.2,
+          ease: "power4.out",
+          delay: i * 0.1,
+          scrollTrigger: {
+            trigger: line,
+            start: "top 95%",
+            once: true
+          },
+        });
+      });
+
+      // Simple reveal for paragraph and items
+      gsap.from(".reveal-content", {
         y: 40,
         opacity: 0,
-        duration: 1,
-        stagger: 0.2,
+        duration: 1.5,
+        stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: ".reveal-content",
+          start: "top 90%",
+          once: true
+        },
+      });
+
+      // Special card reveal
+      gsap.from(".featured-card", {
+        scale: 0.95,
+        opacity: 0,
+        y: 60,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".featured-card",
           start: "top 85%",
+          once: true
         },
       });
     }, containerRef);
@@ -26,113 +60,113 @@ const AcademicPrograms = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-[#f8f7f5] min-h-screen py-20 md:py-32 font-sans text-[#1a1a1a] overflow-hidden" id="programs">
+    <section 
+      ref={containerRef} 
+      className="bg-[#fbf9e3] py-24 md:py-40 font-sans text-black overflow-hidden border-t border-black/5" 
+      id="programs"
+    >
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         
         {/* Main Header Section */}
-        <div className="mb-20 md:mb-24">
+        <div className="mb-24">
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-4 mb-6"
+            className="flex items-center gap-6 mb-12"
           >
-            <div className="w-10 h-[1px] bg-[#c5a47e]"></div>
-            <span className="text-[#c5a47e] text-[10px] font-bold uppercase tracking-[0.4em]">Academy Edtech</span>
+            <div className="w-12 h-[1px] bg-[#ff4041]"></div>
+            <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">Academy Edtech</span>
           </motion.div>
 
-          <h2 className="reveal-item text-2xl md:text-3xl font-bold tracking-tight uppercase mb-4 leading-tight">
-            EDTECH & ACADEMIC PROGRAMS
+          <h2 className="text-5xl md:text-8xl font-serif leading-[1.1] tracking-tight text-black perspective-1000 mb-16">
+            <div className="overflow-hidden pb-4">
+              <span className="reveal-line block">Where design education</span>
+            </div>
+            <div className="overflow-hidden pb-4">
+              <span className="reveal-line block italic font-light text-[#ff4041]">
+                meets real-world practice.
+              </span>
+            </div>
           </h2>
 
-          <h1 className="reveal-item text-4xl md:text-6xl font-serif leading-[1.1] text-black mt-8 mb-8 tracking-tight">
-            Where design education meets <br />
-            <span className="italic text-[#c5a47e]">real-world practice.</span>
-          </h1>
-
-          <div className="reveal-item h-[1px] bg-black/10 w-full mb-10"></div>
-
-          <p className="reveal-item text-lg md:text-xl text-[#555] font-light leading-relaxed max-w-4xl">
-            The Open Room's education arm is built on a simple but powerful conviction: the best way to learn architecture 
-            is to be immersed in it. Our programs are designed for students at critical junctures — from school-leavers 
-            aspiring to study architecture, to college students seeking deeper industry exposure.
-          </p>
+          <div className="max-w-4xl overflow-hidden">
+            <p className="reveal-content text-black/70 text-lg md:text-2xl leading-relaxed font-light">
+              The Open Room's education arm is built on a simple but powerful conviction: the best way to learn architecture 
+              is to be immersed in it. Our programs are designed for students at critical junctures — from school-leavers 
+              aspiring to study architecture, to college students seeking deeper industry exposure.
+            </p>
+          </div>
         </div>
 
-        {/* NATA Featured Section - Centered Card */}
-        <div className="flex justify-center mb-24 md:mb-32">
-          <div className="reveal-item w-full max-w-4xl">
-            <div className="bg-white p-8 md:p-16 border border-black/5 shadow-[0_20px_50px_rgba(0,0,0,0.03)] rounded-sm relative">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-[#c5a47e]"></div>
-              
-              <h3 className="text-2xl md:text-4xl font-serif mb-4">NATA Coaching & <br />Design Guidance</h3>
-              <p className="text-[#c5a47e] italic text-lg mb-8 font-serif">For Class 11 & 12 Students</p>
-              
-              <p className="text-[#666] text-lg md:text-xl leading-relaxed font-light mb-10">
-                Our NATA preparation program is structured to build spatial reasoning, drawing 
-                skills, design thinking, and aesthetic sensibility in young aspirants. We go 
-                beyond exam prep — we mentor students to understand what architecture truly 
-                means as a discipline and a career. Small batches ensure personalised attention 
-                and rapid skill development.
+        {/* NATA Featured Section - Red Premium Card */}
+        <div className="mb-24">
+          <div className="featured-card bg-[#ff4041] p-10 md:p-20 rounded-sm shadow-[0_40px_80px_rgba(255,64,65,0.2)] relative overflow-hidden group">
+            <div className="relative z-10 max-w-3xl">
+              <span className="text-white/60 text-[10px] font-bold uppercase tracking-[0.4em] mb-8 block">Featured Program</span>
+              <h3 className="text-3xl md:text-6xl font-serif text-white mb-8 leading-tight tracking-tight">
+                NATA Coaching & <br />Design Guidance
+              </h3>
+              <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light mb-12">
+                Our preparation program is structured to build spatial reasoning, drawing 
+                skills, design thinking, and aesthetic sensibility. We go beyond exam prep — 
+                we mentor students to understand what architecture truly means as a discipline.
               </p>
+              <div className="flex flex-wrap gap-4 items-center">
+                <span className="px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-widest">Class 11 & 12</span>
+                <span className="px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-widest">Small Batches</span>
+              </div>
             </div>
+            {/* Decorative element */}
+            <div className="absolute -right-20 -bottom-20 text-[30vw] font-bold text-white/5 select-none pointer-events-none">NATA</div>
           </div>
         </div>
 
         {/* College Collaborations Section */}
-        <div className="mb-24 md:mb-32">
-          <div className="reveal-item flex flex-col md:flex-row gap-8 md:gap-16 items-start mb-12">
-            <h3 className="text-[#1a1a1a] text-2xl md:text-4xl font-serif max-w-sm shrink-0 leading-tight">
+        <div className="mb-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
+          <div className="overflow-hidden">
+            <h3 className="reveal-content text-black text-3xl md:text-5xl font-serif leading-tight">
               Academic College <br />Collaborations
             </h3>
-            <p className="text-lg md:text-xl text-[#555] font-light leading-relaxed">
-              The Open Room actively partners with architecture colleges to bridge the gap between academic theory and 
-              professional practice. Our collaboration programs include live studio visits, guest lectures by practising 
-              architects, joint design workshops, and semester project mentorship. We bring the studio into the classroom — 
-              and the classroom into the studio.
+          </div>
+          <div className="overflow-hidden">
+            <p className="reveal-content text-black/70 text-lg md:text-xl font-light leading-relaxed">
+              We partner with architecture colleges to bridge the gap between academic theory and 
+              professional practice. Our programs include live studio visits, guest lectures, 
+              joint workshops, and semester project mentorship. We bring the studio into the 
+              classroom — and the classroom into the studio.
             </p>
           </div>
         </div>
 
         {/* Programs Detail Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-16 border-t border-black/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-16 border-t border-black/5">
           {[
             {
               title: "NATA Preparation",
-              desc: "Structured batches for Class 11 & 12 with mock tests, drawing labs, and one-on-one mentoring."
+              desc: "Structured batches for Class 11 & 12 with mock tests, drawing labs, and one-on-one mentoring.",
+              num: "01"
             },
             {
               title: "Portfolio Development",
-              desc: "Guidance for students building portfolios for architecture school admissions."
+              desc: "Guidance for students building portfolios for architecture school admissions.",
+              num: "02"
             },
             {
-              title: "College Partnership Program",
-              desc: "Workshops, live briefs, and mentorship sessions with partner institutions."
+              title: "College Partnerships",
+              desc: "Workshops, live briefs, and mentorship sessions with partner institutions.",
+              num: "03"
             }
           ].map((item, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="group"
-            >
-              <div className="mb-6 overflow-hidden h-[1px]">
-                <motion.div 
-                  initial={{ x: "-100%" }}
-                  whileInView={{ x: 0 }}
-                  transition={{ delay: i * 0.2, duration: 1.5, ease: "circOut" }}
-                  className="w-full h-full bg-[#c5a47e]/30 group-hover:bg-[#c5a47e] transition-colors"
-                ></motion.div>
-              </div>
-              <h4 className="text-lg font-serif text-[#1a1a1a] mb-3 group-hover:text-[#c5a47e] transition-colors">
+            <div key={i} className="reveal-content group">
+              <span className="text-[#ff4041] font-serif italic text-2xl mb-6 block">{item.num}</span>
+              <h4 className="text-xl font-serif text-black mb-4 group-hover:text-[#ff4041] transition-colors duration-500">
                 {item.title}
               </h4>
-              <p className="text-sm md:text-base text-[#666] font-light leading-relaxed">
+              <p className="text-black/60 font-light leading-relaxed">
                 {item.desc}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -141,4 +175,3 @@ const AcademicPrograms = () => {
 };
 
 export default AcademicPrograms;
-
