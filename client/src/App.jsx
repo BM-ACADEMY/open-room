@@ -57,8 +57,8 @@ const App = () => {
           <Route path="/" element={
             <>
               <Homepage onEnquiryClick={() => setIsEnquiryOpen(true)} />
-              <About />
               <Services />
+              <About />
               <AcademicPrograms />
               <StudioAtAGlance/>
               <Footer onEnquiryClick={() => setIsEnquiryOpen(true)} />
@@ -70,6 +70,6 @@ const App = () => {
   )
 }
 
-export default App
+export default App;
 
 
