@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, useCallback, memo, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ThreeScene from './ThreeScene';
+
+// Lazy load ThreeScene to avoid blocking initial render
+const ThreeScene = lazy(() => import('./ThreeScene'));
 
 const navLinks = [
   { name: 'About', id: 'about' },
@@ -54,54 +56,7 @@ const NavigationHeader = memo(({ isScrolled, setIsMenuOpen, onEnquiryClick, scro
   </motion.nav>
 ));
 
-const HeroSection = memo(({ scrollToSection }) => (
-  <section className="relative h-screen w-full flex items-center justify-center">
-    <ThreeScene />
-    <div className="relative w-full h-full max-w-[1400px] flex items-center justify-center px-6 pointer-events-none">
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="text-center"
-        >
-          <h1 className="text-7xl md:text-[10rem] font-serif tracking-tighter leading-none mb-2 text-black">
-            THE OPEN ROOM
-          </h1>
-          <div className="flex items-center justify-center gap-4">
-            <div className="h-[1px] w-12 bg-black/40"></div>
-            <span className="text-[10px] uppercase tracking-[1em] font-bold text-white/60">Studio • Academy</span>
-            <div className="h-[1px] w-12 bg-black/40"></div>
-          </div>
-        </motion.div>
-      </div>
 
-      <div className="absolute bottom-12 left-0 w-full flex justify-center items-center z-30 pointer-events-auto">
-        <div className="flex flex-col md:flex-row gap-4 md:gap-8 px-6">
-          <button 
-            onClick={() => scrollToSection('services')} 
-            className="group relative px-8 md:px-10 py-3.5 md:py-4 overflow-hidden rounded-full border border-black/40 hover:border-[#ff4041] transition-colors duration-500 cursor-pointer text-center"
-          >
-            <div className="absolute inset-0 bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-            <span className="relative z-10 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.4em] text-black group-hover:text-white transition-colors duration-500 whitespace-nowrap">
-              Explore Work
-            </span>
-          </button>
-          
-          <button 
-            onClick={() => scrollToSection('programs')} 
-            className="group relative px-8 md:px-10 py-3.5 md:py-4 overflow-hidden rounded-full border border-black/40 hover:border-[#ff4041] transition-colors duration-500 cursor-pointer text-center"
-          >
-            <div className="absolute inset-0 bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-            <span className="relative z-10 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.4em] text-black group-hover:text-white transition-colors duration-500 whitespace-nowrap">
-              NATA Coaching
-            </span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-));
 
 const BackToTop = memo(({ isScrolled }) => (
   <AnimatePresence>
@@ -250,8 +205,10 @@ const Homepage = ({ onEnquiryClick }) => {
 
       {/* REAL THREE.JS HERO SECTION */}
       <section className="relative h-screen w-full flex items-center justify-center">
-        {/* The Three.js Canvas */}
-        <ThreeScene />
+        {/* The Three.js Canvas - Lazy loaded */}
+        <Suspense fallback={<div className="absolute inset-0 bg-[#1a1a1a]" />}>
+          <ThreeScene />
+        </Suspense>
 
         {/* Content Overlay */}
         <div className="relative w-full h-full max-w-[1400px] flex items-center justify-center px-6 pointer-events-none">
@@ -260,26 +217,27 @@ const Homepage = ({ onEnquiryClick }) => {
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="text-center"
             >
-              <h1 className="text-7xl md:text-[10rem] font-serif tracking-tighter leading-none mb-2 text-black">
+              <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-bold text-[#fbf9e3] mb-6 block">Architecture & Design Education</span>
+              <h1 className="text-7xl md:text-[10rem] font-display tracking-[-0.04em] leading-none mb-3 text-[#ff4041] font-bold">
                 THE OPEN ROOM
               </h1>
-              <div className="flex items-center justify-center gap-4">
-                <div className="h-[1px] w-12 bg-black/40"></div>
-                <span className="text-[10px] uppercase tracking-[1em] font-bold text-white/60">Studio • Academy</span>
-                <div className="h-[1px] w-12 bg-black/40"></div>
+              <div className="flex items-center justify-center gap-3 max-w-md md:max-w-lg mx-auto mt-4">
+                <div className="h-[1px] w-8 bg-[#ff4041] shrink-0"></div>
+                <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-medium text-[#fbf9e3] leading-relaxed text-center">Where vision meets precision. Shaping spaces that inspire, nurturing minds that design the future.</span>
+                <div className="h-[1px] w-8 bg-[#ff4041] shrink-0"></div>
               </div>
             </motion.div>
           </div>
 
           {/* Bottom Action Bar */}
-          <div className="absolute bottom-12 left-0 w-full flex justify-center items-center z-30 hidden md:flex pointer-events-auto">
-            <div className="flex gap-8">
+          <div className="absolute bottom-8 md:bottom-12 left-0 w-full flex justify-center items-center z-30 pointer-events-auto px-4">
+            <div className="flex flex-wrap justify-center gap-3 md:gap-6">
               <button 
                 onClick={() => scrollToSection('services')} 
-                className="group relative px-10 py-4 overflow-hidden rounded-full border border-black/40 hover:border-[#ff4041] transition-colors duration-500 cursor-pointer"
+                className="group relative px-10 py-4 overflow-hidden rounded-full border border-black/20 bg-white/80 backdrop-blur-sm hover:border-[#ff4041] transition-colors duration-500 cursor-pointer"
               >
                 <div className="absolute inset-0 bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 <span className="relative z-10 text-[11px] font-bold uppercase tracking-[0.4em] text-black group-hover:text-white transition-colors duration-500">
@@ -289,11 +247,21 @@ const Homepage = ({ onEnquiryClick }) => {
               
               <button 
                 onClick={() => scrollToSection('programs')} 
-                className="group relative px-10 py-4 overflow-hidden rounded-full border border-black/40 hover:border-[#ff4041] transition-colors duration-500 cursor-pointer"
+                className="group relative px-10 py-4 overflow-hidden rounded-full border border-black/20 bg-white/80 backdrop-blur-sm hover:border-[#ff4041] transition-colors duration-500 cursor-pointer"
               >
                 <div className="absolute inset-0 bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 <span className="relative z-10 text-[11px] font-bold uppercase tracking-[0.4em] text-black group-hover:text-white transition-colors duration-500">
                   NATA Coaching
+                </span>
+              </button>
+
+              <button 
+                onClick={() => scrollToSection('programs')} 
+                className="group relative px-10 py-4 overflow-hidden rounded-full border border-black/20 bg-white/80 backdrop-blur-sm hover:border-[#ff4041] transition-colors duration-500 cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                <span className="relative z-10 text-[11px] font-bold uppercase tracking-[0.4em] text-black group-hover:text-white transition-colors duration-500">
+                  College Collaboration
                 </span>
               </button>
             </div>
@@ -305,24 +273,5 @@ const Homepage = ({ onEnquiryClick }) => {
   );
 };
 
-
-const Callout = ({ label, x, y, mouseX, mouseY, delay }) => {
-  const moveX = useTransform(mouseX, [-25, 25], [x - 10, x + 10]);
-  const moveY = useTransform(mouseY, [-25, 25], [y - 10, y + 10]);
-  
-  return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay }}
-      style={{ x: moveX, y: moveY }}
-      className="absolute hidden md:flex items-center gap-3"
-    >
-      <div className="w-2 h-2 rounded-full bg-[#7A4B3A]" />
-      <div className="h-[1px] w-12 bg-black/10" />
-      <span className="text-[9px] font-mono font-bold tracking-widest text-black/40">{label}</span>
-    </motion.div>
-  );
-};
 
 export default Homepage;

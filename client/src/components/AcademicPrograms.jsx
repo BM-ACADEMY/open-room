@@ -2,41 +2,16 @@ import React, { useLayoutEffect, useRef} from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FloatingShape = ({ position, color, type }) => {
-  const meshRef = useRef();
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1;
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
-    }
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-      <mesh position={position} ref={meshRef}>
-        {type === 'box' ? <boxGeometry args={[1, 1, 1]} /> : <torusGeometry args={[0.6, 0.2, 16, 100]} />}
-        <meshStandardMaterial color={color} transparent opacity={0.1} wireframe />
-      </mesh>
-    </Float>
-  );
-};
-
 const BackgroundShapes = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
-    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <FloatingShape position={[-5, 2, 0]} color="#ff4041" type="box" />
-      <FloatingShape position={[-6, -2, -2]} color="#000000" type="torus" />
-      <FloatingShape position={[5, -2, 0]} color="#ff4041" type="box" />
-      <FloatingShape position={[6, 2, -1]} color="#000000" type="torus" />
-    </Canvas>
+    {/* Lightweight CSS shapes instead of a full Three.js Canvas */}
+    <div className="absolute -top-20 -left-20 w-40 h-40 border border-[#ff4041]/10 rotate-45 rounded-sm" />
+    <div className="absolute top-1/3 -right-16 w-32 h-32 border border-black/5 rotate-12 rounded-full" />
+    <div className="absolute bottom-20 left-1/4 w-24 h-24 border border-[#ff4041]/8 -rotate-12 rounded-sm" />
+    <div className="absolute top-1/4 right-1/3 w-20 h-20 border border-black/5 rotate-45 rounded-full" />
   </div>
 );
 
