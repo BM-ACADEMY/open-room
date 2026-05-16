@@ -4,9 +4,10 @@ import ThreeScene from './ThreeScene';
 
 const navLinks = [
   { name: 'About', id: 'about' },
-  { name: 'Services', id: 'services' },
+  { name: 'Architecture', id: 'services' },
+  { name: 'NATA Coaching', id: 'nata-excellence' },
+  { name: 'Collaborations', id: 'programs' },
   { name: 'Our Team', id: 'governance' },
-  { name: 'NATA Coaching', id: 'programs' },
   { name: 'Contact', id: 'contact' },
 ];
 
@@ -212,46 +213,62 @@ const Homepage = ({ onEnquiryClick }) => {
                 </button>
               </div>
 
-              {/* Links */}
-              <div className="flex-1 flex flex-col justify-center p-10 md:p-20 gap-10">
-                {navLinks.map((link, idx) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 * idx + 0.3, duration: 0.6 }}
-                  >
-                    <button
-                      onClick={() => scrollToSection(link.id)}
-                      className="group flex items-center gap-6 text-4xl md:text-6xl font-serif text-black hover:text-[#ff4041] transition-colors duration-300"
+              {/* Categorized Links */}
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 p-10 md:p-20 items-start overflow-y-auto">
+                {/* Studio Column */}
+                <div className="flex flex-col gap-8 md:gap-12">
+                  <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.6em] mb-4">Studio</span>
+                  {navLinks.slice(0, 3).map((link, idx) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ x: 30, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 * idx + 0.3, duration: 0.6 }}
                     >
-                      <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity">0{idx + 1}</span>
-                      <span className="relative">
-                        {link.name}
-                        <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-                      </span>
-                    </button>
-                  </motion.div>
-                ))}
-                <motion.div
-                  initial={{ x: 50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 * navLinks.length + 0.3, duration: 0.6 }}
-                >
-                  <button
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      onEnquiryClick();
-                    }}
-                    className="group flex items-center gap-6 text-4xl md:text-6xl font-serif text-[#ff4041] hover:text-black transition-colors duration-300"
-                  >
-                    <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity">0{navLinks.length + 1}</span>
-                    <span className="relative">
-                      Enquiry
-                      <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-                    </span>
-                  </button>
-                </motion.div>
+                      <button
+                        onClick={() => scrollToSection(link.id)}
+                        className="group flex flex-col items-start transition-all duration-300"
+                      >
+                        <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity mb-1">0{idx + 1}</span>
+                        <span className="text-3xl md:text-5xl font-serif text-black group-hover:text-[#ff4041] relative">
+                          {link.name}
+                          <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+                        </span>
+                      </button>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Connect Column */}
+                <div className="flex flex-col gap-8 md:gap-12">
+                  <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.6em] mb-4">Connect</span>
+                  {[...navLinks.slice(3, 5), { name: 'Enquiry', isEnquiry: true }].map((link, idx) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ x: 30, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 * (idx + 3) + 0.3, duration: 0.6 }}
+                    >
+                      <button
+                        onClick={() => {
+                          if (link.isEnquiry) {
+                            setIsMenuOpen(false);
+                            onEnquiryClick();
+                          } else {
+                            scrollToSection(link.id);
+                          }
+                        }}
+                        className="group flex flex-col items-start transition-all duration-300"
+                      >
+                        <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity mb-1">0{idx + 4}</span>
+                        <span className={`text-3xl md:text-5xl font-serif relative ${link.isEnquiry ? 'text-black font-bold' : 'text-black'} group-hover:text-[#ff4041]`}>
+                          {link.name}
+                          <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+                        </span>
+                      </button>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
               {/* Footer inside menu */}

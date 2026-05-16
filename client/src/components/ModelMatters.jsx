@@ -90,15 +90,6 @@ const ModelMatters = () => {
 
       <div className="max-w-7xl mx-auto w-full relative z-10 text-center">
         <div className="mb-24 flex flex-col items-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-12 block"
-          >
-            Our Philosophy
-          </motion.span>
-
           <h2 className="text-5xl md:text-8xl font-serif mb-16 leading-[1.2] tracking-tight text-black perspective-1000">
             <div className="overflow-hidden pb-4 mb-2">
               <span className="mm-reveal-line block">Why this</span>

@@ -114,10 +114,9 @@ const About = () => {
             viewport={{ once: true }}
             className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-12 block"
           >
-            What We Do
+            About Us
           </motion.span>
-          
-          <h2 className="text-5xl md:text-8xl font-serif mb-16 leading-[1.2] tracking-tight text-black perspective-1000">
+                    <h2 className="text-5xl md:text-8xl font-serif mb-16 leading-[1.2] tracking-tight text-black perspective-1000">
             <div className="overflow-hidden pb-4 mb-2">
               <span className="reveal-line block">Bridging the gap between</span>
             </div>
@@ -137,10 +136,6 @@ const About = () => {
             </p>
           </div>
         </div>
-
-        {/* Subtle Decorative Elements */}
-        <div className="absolute top-1/2 left-0 w-32 h-[1px] bg-[#ff4041]/20 -translate-y-1/2"></div>
-        <div className="absolute top-1/2 right-0 w-32 h-[1px] bg-[#ff4041]/20 -translate-y-1/2"></div>
       </section>
 
       {/* Old Stack Animation Sections */}
@@ -154,7 +149,6 @@ const About = () => {
                 <p className="text-white/90 text-lg md:text-xl leading-relaxed font-light">
                   A full-service studio delivering architectural design, interior projects, and turnkey execution across residential and commercial sectors in Chennai and beyond.
                 </p>
-                <div className="mt-12 w-12 h-[1px] bg-white/30 group-hover:w-24 transition-all duration-500"></div>
               </div>
               <div className="absolute -right-10 -bottom-10 text-[15vw] font-bold text-white/15 select-none">01</div>
             </div>
@@ -166,7 +160,6 @@ const About = () => {
                 <p className="text-white/90 text-lg md:text-xl leading-relaxed font-light">
                   A structured EdTech arm offering NATA coaching, design guidance for students, and collaborative academic programs with architecture colleges.
                 </p>
-                <div className="mt-12 w-12 h-[1px] bg-white/30 group-hover:w-24 transition-all duration-500"></div>
               </div>
               <div className="absolute -right-10 -bottom-10 text-[15vw] font-bold text-white/15 select-none">02</div>
             </div>

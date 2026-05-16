@@ -6,13 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Homepage from './components/Homepage'
 import About from './pages/About'
 import AcademicPrograms from './components/AcademicPrograms'
+import Collaborations from './components/Collaborations'
 import MeetOurTeam from './components/MeetOurTeam'
+import FAQ from './components/FAQ'
 import Projects from './pages/Projects'
 import Services from './pages/Services'
 import Awards from './pages/Awards'
-import StudioAtAGlance from './components/StudioAtAGlance'
 import Footer from './components/Footer'
 import EnquiryForm from './components/EnquiryForm'
+import NataCoaching from './components/NataCoaching'
 
 const App = () => {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
@@ -54,18 +56,20 @@ const App = () => {
           <Route path="/" element={
             <>
               <Homepage onEnquiryClick={() => setIsEnquiryOpen(true)} />
-              <Services />
               <About />
+              <Services />
               <AcademicPrograms />
+              <NataCoaching/>
+              <Collaborations />
               <MeetOurTeam />
-              {/* <StudioAtAGlance/> */}
+              <FAQ />
               <Footer onEnquiryClick={() => setIsEnquiryOpen(true)} />
             </>
           } />
         </Routes>
       </div>
     </Router>
-  )
-}
+  );
+};
 
 export default App;

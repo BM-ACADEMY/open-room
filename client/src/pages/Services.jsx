@@ -81,7 +81,7 @@ const Services = () => {
       <div className="pt-48 pb-20 px-6 md:px-24 max-w-[1400px]">
         <div>
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.5em]">Our Services</span>
+            <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.5em]">Architecture</span>
             <div className="w-12 h-[1px] bg-[#ff4041]/30"></div>
           </div>
           <h2 className="text-4xl md:text-7xl font-serif leading-[1.1] mb-12 tracking-tight max-w-5xl">

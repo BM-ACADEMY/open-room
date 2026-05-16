@@ -14,26 +14,31 @@ const team = [
     name: "Vickram MuthuRathina Sabari",
     role: "Founder Chairman",
     image: vickram,
+    linkedin: "#",
   },
   {
     name: "Mohammad Izas",
     role: "Head of Operations",
     image: izas,
+    linkedin: "#",
   },
   {
     name: "Javid Asraff",
     role: "Principal Architect",
     image: javid,
+    linkedin: "https://www.linkedin.com/in/javid-asraff-7341b4283/",
   },
   {
     name: "Abishek Pragadheswar U",
     role: "Head of Constructions",
     image: abishek,
+    linkedin: "#",
   },
   {
     name: "Ahamed Yasir",
     role: "Board Of Advisors",
     image: yasir,
+    linkedin: "#",
   },
 ];
 
@@ -88,30 +93,32 @@ const MeetOurTeam = () => {
         </div>
 
         {/* Team Grid */}
-        <div className="team-grid flex flex-wrap justify-center gap-8 md:gap-12">
+        <div className="team-grid flex flex-wrap justify-center gap-10 md:gap-16">
           {team.map((member, i) => (
-            <div key={i} className="team-card group w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] xl:w-[calc(20%-2.5rem)] max-w-[280px]">
-              <div className="relative aspect-[3/4] overflow-hidden bg-white rounded-sm shadow-sm hover:shadow-xl transition-all duration-700 mb-6">
+            <div key={i} className="team-card group w-full sm:w-[calc(50%-2rem)] lg:w-[calc(33.333%-3rem)] max-w-[340px]">
+              <div className="relative aspect-[3/4] overflow-hidden bg-white rounded-lg shadow-md hover:shadow-2xl transition-all duration-700 mb-8 border border-black/5">
                 <img 
                   src={member.image} 
                   alt={member.name}
-                  className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-1000 scale-[1.05] group-hover:scale-100"
+                  className="w-full h-full object-cover object-top transition-all duration-1000 scale-[1.05] group-hover:scale-110"
                 />
                 
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <a href="#" className="bg-black text-white p-2 block rounded-sm">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                    </svg>
-                  </a>
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                  {member.linkedin !== "#" && (
+                    <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="bg-[#0077b5] text-white p-3 rounded-full hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                    </a>
+                  )}
                 </div>
               </div>
 
               <div className="text-center">
-                <h3 className="text-lg font-bold text-black mb-1 leading-tight h-[3rem] flex items-center justify-center">
+                <h3 className="text-xl md:text-2xl font-bold text-black mb-2 leading-tight">
                   {member.name}
                 </h3>
-                <p className="text-[#ff4041] text-xs font-medium tracking-wide uppercase">
+                <p className="text-[#ff4041] text-sm font-semibold tracking-widest uppercase">
                   {member.role}
                 </p>
               </div>
