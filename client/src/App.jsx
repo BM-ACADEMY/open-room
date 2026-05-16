@@ -32,18 +32,18 @@ const App = () => {
       infinite: false,
     })
 
-    // Use GSAP ticker for Lenis instead of a separate RAF loop
-    // This avoids running two competing animation loops
-    lenis.on('scroll', ScrollTrigger.update)
-    gsap.ticker.lagSmoothing(0)
-    
-    const tickerCallback = (time) => {
-      lenis.raf(time * 1000)
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
     }
-    gsap.ticker.add(tickerCallback)
+
+    requestAnimationFrame(raf)
+
+    lenis.on('scroll', ScrollTrigger.update)
+
+    gsap.ticker.lagSmoothing(0)
 
     return () => {
-      gsap.ticker.remove(tickerCallback)
       lenis.destroy()
     }
   }, [])
