@@ -213,69 +213,36 @@ const Homepage = ({ onEnquiryClick }) => {
                 </button>
               </div>
 
-              {/* Categorized Links */}
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 p-10 md:p-20 items-start overflow-y-auto">
-                {/* Studio Column */}
-                <div className="flex flex-col gap-8 md:gap-12">
-                  <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.6em] mb-4">Studio</span>
-                  {navLinks.slice(0, 3).map((link, idx) => (
-                    <motion.div
-                      key={link.name}
-                      initial={{ x: 30, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 * idx + 0.3, duration: 0.6 }}
+              {/* Navigation Links */}
+              <div className="flex-1 flex flex-col gap-6 p-10 md:p-16 overflow-y-auto no-scrollbar">
+                {[...navLinks, { name: 'Enquiry', isEnquiry: true }].map((link, idx) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ x: 30, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.1 * idx + 0.3, duration: 0.6 }}
+                  >
+                    <button
+                      onClick={() => {
+                        if (link.isEnquiry) {
+                          setIsMenuOpen(false);
+                          onEnquiryClick();
+                        } else {
+                          scrollToSection(link.id);
+                        }
+                      }}
+                      className="group flex items-start transition-all duration-300"
                     >
-                      <button
-                        onClick={() => scrollToSection(link.id)}
-                        className="group flex flex-col items-start transition-all duration-300"
-                      >
-                        <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity mb-1">0{idx + 1}</span>
-                        <span className="text-3xl md:text-5xl font-serif text-black group-hover:text-[#ff4041] relative">
-                          {link.name}
-                          <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-                        </span>
-                      </button>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* Connect Column */}
-                <div className="flex flex-col gap-8 md:gap-12">
-                  <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.6em] mb-4">Connect</span>
-                  {[...navLinks.slice(3, 5), { name: 'Enquiry', isEnquiry: true }].map((link, idx) => (
-                    <motion.div
-                      key={link.name}
-                      initial={{ x: 30, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 * (idx + 3) + 0.3, duration: 0.6 }}
-                    >
-                      <button
-                        onClick={() => {
-                          if (link.isEnquiry) {
-                            setIsMenuOpen(false);
-                            onEnquiryClick();
-                          } else {
-                            scrollToSection(link.id);
-                          }
-                        }}
-                        className="group flex flex-col items-start transition-all duration-300"
-                      >
-                        <span className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity mb-1">0{idx + 4}</span>
-                        <span className={`text-3xl md:text-5xl font-serif relative ${link.isEnquiry ? 'text-black font-bold' : 'text-black'} group-hover:text-[#ff4041]`}>
-                          {link.name}
-                          <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-                        </span>
-                      </button>
-                    </motion.div>
-                  ))}
-                </div>
+                      <span className={`text-3xl md:text-5xl font-serif relative ${link.isEnquiry ? 'text-[#ff4041] font-bold' : 'text-black'} group-hover:text-[#ff4041]`}>
+                        {link.name}
+                        <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+                      </span>
+                    </button>
+                  </motion.div>
+                ))}
               </div>
 
-              {/* Footer inside menu */}
-              <div className="p-10 border-t border-black/5 flex justify-between items-center">
-                <div className="text-[9px] font-bold uppercase tracking-[0.3em] opacity-40">The Open Room</div>
-              
-              </div>
+
             </motion.div>
           </>
         )}

@@ -121,7 +121,7 @@ const Footer = ({ onEnquiryClick }) => {
           </div>
         </div>
 
-        <div className="footer-bottom border-t border-black/5 pt-10 mt-20">
+        <div className="footer-bottom border-t border-black/5 pt-8 mt-12">
           <p>&copy; {new Date().getFullYear()} The Open Room. All rights reserved.</p>
           {/* <div className="footer-legal">
             <a href="#">Privacy Policy</a>

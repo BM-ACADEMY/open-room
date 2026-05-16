@@ -56,16 +56,16 @@ const EnquiryForm = ({ isOpen, onClose }) => {
           onClick={onClose}
         >
           <motion.div
-            className="w-full max-w-[550px] bg-white p-10 flex flex-col shadow-[0_30px_60px_rgba(0,0,0,0.2)] overflow-y-auto max-h-[90vh] relative no-scrollbar will-change-transform"
+            className="w-full max-w-[500px] bg-white p-6 md:p-8 flex flex-col shadow-[0_30px_60px_rgba(0,0,0,0.2)] overflow-y-auto max-h-[85vh] relative no-scrollbar will-change-transform"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mb-8 relative">
-              <motion.span variants={itemVariants} className="text-[0.65rem] font-bold tracking-[0.3em] text-[#ff4041] uppercase block mb-2">PROJECT ENQUIRY</motion.span>
-              <motion.h2 variants={itemVariants} className="font-serif text-[2.5rem] leading-[1.1] text-[#1a1a1a] m-0">Let's build something<br/>extraordinary.</motion.h2>
+            <div className="mb-4 relative">
+              <motion.span variants={itemVariants} className="text-[0.65rem] font-bold tracking-[0.3em] text-[#ff4041] uppercase block mb-1">PROJECT ENQUIRY</motion.span>
+              <motion.h2 variants={itemVariants} className="font-serif text-[1.8rem] md:text-[2.2rem] leading-[1.1] text-[#1a1a1a] m-0">Let's build something<br/>extraordinary.</motion.h2>
               <button 
                 className="absolute -top-4 -right-4 bg-transparent border-none cursor-pointer text-[#1a1a1a] p-2.5 transition-transform duration-300 hover:rotate-90 z-10" 
                 onClick={onClose}
@@ -76,7 +76,7 @@ const EnquiryForm = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            <form className="flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
               <motion.div variants={itemVariants} className="flex flex-col gap-2 relative group">
                 <label className="text-[0.6rem] font-bold tracking-widest text-[#999] uppercase">NAME</label>
                 <div className="relative">
@@ -129,7 +129,7 @@ const EnquiryForm = ({ isOpen, onClose }) => {
                 </div>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="mt-2.5">
+              <motion.div variants={itemVariants} className="mt-1">
                 <button 
                   type="submit" 
                   className="w-full bg-[#1a1a1a] text-white border-none p-[18px] flex justify-between items-center text-[0.75rem] font-bold tracking-[0.2em] cursor-pointer hover:bg-[#ff4041]"
@@ -142,7 +142,7 @@ const EnquiryForm = ({ isOpen, onClose }) => {
               </motion.div>
             </form>
 
-            <motion.div variants={itemVariants} className="mt-auto pt-10 border-t border-[#f0f0f0] text-[#888] text-[0.9rem]">
+            <motion.div variants={itemVariants} className="mt-auto pt-6 border-t border-[#f0f0f0] text-[#888] text-[0.85rem]">
               <p>Prefer direct email? <a href="mailto:info@theopenroom.in" className="text-[#1a1a1a] no-underline font-semibold hover:text-[#ff4041] transition-colors">info@theopenroom.in</a></p>
             </motion.div>
           </motion.div>

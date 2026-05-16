@@ -2,44 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
 import ModelMatters from '../components/ModelMatters';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const FloatingShape = ({ position, color, type }) => {
-  const meshRef = useRef();
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1;
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
-    }
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-      <mesh position={position} ref={meshRef}>
-        {type === 'box' ? <boxGeometry args={[1, 1, 1]} /> : <torusGeometry args={[0.6, 0.2, 16, 100]} />}
-        <meshStandardMaterial color={color} transparent opacity={0.1} wireframe />
-      </mesh>
-    </Float>
-  );
-};
-
-const BackgroundShapes = () => (
-  <div className="absolute inset-0 pointer-events-none overflow-hidden">
-    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <FloatingShape position={[-5, 2, 0]} color="#ff4041" type="box" />
-      <FloatingShape position={[-6, -2, -2]} color="#000000" type="torus" />
-      <FloatingShape position={[5, -2, 0]} color="#ff4041" type="box" />
-      <FloatingShape position={[6, 2, -1]} color="#000000" type="torus" />
-    </Canvas>
-  </div>
-);
 
 const About = () => {
   const sectionRef = useRef(null);
@@ -105,18 +70,17 @@ const About = () => {
   return (
     <div ref={sectionRef} className="bg-[#fbf9e3]">
       {/* What We Do - Typography Focused */}
-      <section id="about" className="min-h-[80vh] flex flex-col justify-center items-center px-6 md:px-24 py-32 overflow-hidden relative border-b border-black/5">
-        <BackgroundShapes />
+      <section id="about" className="min-h-[70vh] flex flex-col justify-center items-center px-6 md:px-24 py-20 md:py-28 overflow-hidden relative border-b border-black/5">
         <div className="max-w-6xl text-center relative z-10">
           <motion.span 
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-12 block"
+            className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-8 block"
           >
             About Us
           </motion.span>
-                    <h2 className="text-5xl md:text-8xl font-serif mb-16 leading-[1.2] tracking-tight text-black perspective-1000">
+                    <h2 className="text-4xl md:text-7xl font-serif mb-10 md:mb-12 leading-[1.2] tracking-tight text-black perspective-1000">
             <div className="overflow-hidden pb-4 mb-2">
               <span className="reveal-line block">Bridging the gap between</span>
             </div>

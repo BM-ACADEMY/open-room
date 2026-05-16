@@ -76,17 +76,17 @@ const Collaborations = () => {
   return (
     <section
       ref={containerRef}
-      className="bg-[#fbf9e3] py-24 md:py-40 font-sans text-black overflow-hidden border-t border-black/5"
+      className="bg-[#fbf9e3] py-16 md:py-24 font-sans text-black overflow-hidden border-t border-black/5"
       id="programs"
     >
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         {/* College Collaborations Section - Centered Excellence Style */}
-        <div className="mb-24 flex flex-col items-center text-center">
+        <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-6 mb-12"
+            className="flex items-center gap-6 mb-8"
           >
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">
@@ -194,7 +194,7 @@ const Collaborations = () => {
         </div>
 
         {/* Our Vision & Stats Section - Matching Header Style */}
-        <div className="mt-40 pt-40 border-t border-black/5 flex flex-col items-center text-center">
+        <div className="mt-20 pt-20 border-t border-black/5 flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

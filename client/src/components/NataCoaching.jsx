@@ -145,7 +145,7 @@ const NataCoaching = () => {
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
           </motion.div>
 
-          <h2 className="text-5xl md:text-8xl font-serif leading-[1.1] tracking-tight text-black mb-10">
+          <h2 className="text-4xl md:text-7xl font-serif leading-[1.1] tracking-tight text-black mb-10">
             <div className="overflow-hidden pb-2">
               <span className="reveal-line block">NATA Coaching</span>
             </div>
