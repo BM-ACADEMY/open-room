@@ -59,7 +59,6 @@ const Services = () => {
           scale: 0.85,
           opacity: 0,
           rotation: -8,
-          filter: "blur(15px)",
           scrollTrigger: {
             trigger: cards[index + 1],
             start: "top 70%", // Start blurring when next card is in the middle

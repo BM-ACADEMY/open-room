@@ -67,6 +67,18 @@ const NataCoaching = () => {
           once: true
         },
       });
+      // Section label reveal (replaces Framer Motion whileInView)
+      gsap.from(".nata-section-label", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".nata-section-label",
+          start: "top 95%",
+          once: true,
+        },
+      });
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -80,50 +92,7 @@ const NataCoaching = () => {
     "Small batch sizes for better attention"
   ];
 
-  const stats = [
-    { 
-      label: "Success Rate", 
-      value: "95%+", 
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <path d="m9 12 2 2 4-4" />
-        </svg>
-      )
-    },
-    { 
-      label: "Students Trained", 
-      value: "500+", 
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      )
-    },
-    { 
-      label: "College Admissions", 
-      value: "50+", 
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 9 12 4l9 5v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-          <path d="M9 22V12h6v10" />
-        </svg>
-      )
-    },
-    { 
-      label: "Years Experience", 
-      value: "10+", 
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
-        </svg>
-      )
-    }
-  ];
+
 
   return (
     <section 
@@ -134,16 +103,11 @@ const NataCoaching = () => {
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         {/* Top Content - Centered */}
         <div className="mb-16 md:mb-20 flex flex-col items-center text-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-6 mb-8"
-          >
+          <div className="nata-section-label flex items-center gap-6 mb-8">
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">Educational Wing</span>
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
-          </motion.div>
+          </div>
 
           <h2 className="text-4xl md:text-7xl font-serif leading-[1.1] tracking-tight text-black mb-10">
             <div className="overflow-hidden pb-2">
@@ -172,24 +136,6 @@ const NataCoaching = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Bottom Stats Grid - Centered items with Animated Counters */}
-        <div className="stat-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 pt-4">
-          {stats.map((stat, i) => (
-            <div
-              key={i}
-              className="group relative pt-8 flex flex-col items-center text-center"
-            >
-              <h3 className="text-5xl md:text-6xl font-serif mb-4 tracking-tighter text-black group-hover:text-[#ff4041] transition-colors duration-500">
-                <Counter value={stat.value} />
-              </h3>
-              
-              <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-black/40 group-hover:text-black/80 transition-colors duration-500">
-                {stat.label}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

@@ -49,7 +49,7 @@ const EnquiryForm = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[1000] flex justify-center items-center p-5 will-change-opacity"
+          className="fixed inset-0 bg-black/85 z-[1000] flex justify-center items-center p-5 will-change-opacity"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

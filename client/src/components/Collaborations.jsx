@@ -69,6 +69,21 @@ const Collaborations = () => {
           },
         });
       });
+      // Section label reveals (replaces Framer Motion whileInView)
+      const sectionLabels = containerRef.current.querySelectorAll(".collab-section-label");
+      sectionLabels.forEach((label) => {
+        gsap.from(label, {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: label,
+            start: "top 95%",
+            once: true,
+          },
+        });
+      });
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -82,18 +97,13 @@ const Collaborations = () => {
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         {/* College Collaborations Section - Centered Excellence Style */}
         <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-6 mb-8"
-          >
+          <div className="collab-section-label flex items-center gap-6 mb-8">
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">
               Academic Collaborations
             </span>
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
-          </motion.div>
+          </div>
 
           <h3 className="reveal-content text-black text-4xl md:text-7xl font-serif leading-tight mb-12">
             Academic College <br />
@@ -195,18 +205,13 @@ const Collaborations = () => {
 
         {/* Our Vision & Stats Section - Matching Header Style */}
         <div className="mt-20 pt-20 border-t border-black/5 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-6 mb-12"
-          >
+          <div className="collab-section-label flex items-center gap-6 mb-12">
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">
               Our Vision
             </span>
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
-          </motion.div>
+          </div>
 
           <div className="overflow-hidden max-w-4xl mx-auto mb-20">
             <p className="reveal-content font-sans text-black/70 text-lg md:text-xl font-light leading-relaxed">

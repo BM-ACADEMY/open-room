@@ -90,6 +90,19 @@ const FAQ = () => {
           once: true,
         },
       });
+
+      // Section label reveal (replaces Framer Motion whileInView)
+      gsap.from(".faq-section-label", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".faq-section-label",
+          start: "top 95%",
+          once: true,
+        },
+      });
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -100,18 +113,13 @@ const FAQ = () => {
         
         {/* Centered Header Style */}
         <div className="mb-24 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-6 mb-12"
-          >
+          <div className="faq-section-label flex items-center gap-6 mb-12">
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">
               Common Inquiries
             </span>
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
-          </motion.div>
+          </div>
 
           <h3 className="text-black text-4xl md:text-7xl font-serif leading-tight">
             Frequently Asked <br />

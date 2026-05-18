@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ModelMatters from '../components/ModelMatters';
@@ -28,6 +27,19 @@ const About = () => {
         });
       });
 
+      // Section label reveal
+      gsap.from(".about-label", {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".about-label",
+          start: "top 90%",
+          once: true,
+        },
+      });
+
       // Smooth reveal for the main paragraph
       gsap.from(".reveal-para-text", {
         y: 40,
@@ -51,7 +63,6 @@ const About = () => {
           scale: 0.85,
           opacity: 0,
           rotation: -8,
-          filter: "blur(15px)",
           scrollTrigger: {
             trigger: stackingCards[index + 1],
             start: "top 80%",
@@ -72,14 +83,9 @@ const About = () => {
       {/* What We Do - Typography Focused */}
       <section id="about" className="min-h-[70vh] flex flex-col justify-center items-center px-6 md:px-24 py-20 md:py-28 overflow-hidden relative border-b border-black/5">
         <div className="max-w-6xl text-center relative z-10">
-          <motion.span 
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-8 block"
-          >
+          <span className="about-label text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em] mb-8 block">
             About Us
-          </motion.span>
+          </span>
                     <h2 className="text-4xl md:text-7xl font-serif mb-10 md:mb-12 leading-[1.2] tracking-tight text-black perspective-1000">
             <div className="overflow-hidden pb-4 mb-2">
               <span className="reveal-line block">Bridging the gap between</span>

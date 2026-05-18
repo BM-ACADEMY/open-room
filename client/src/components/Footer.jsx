@@ -9,7 +9,7 @@ const navLinks = [
   { name: 'About', id: 'about' },
   { name: 'Architecture', id: 'services' },
   { name: 'NATA Coaching', id: 'nata-excellence' },
-  { name: 'Collaborations', id: 'programs' },
+  { name: 'Academics', id: 'programs' },
   { name: 'Our Team', id: 'governance' },
   { name: 'Contact', id: 'contact' },
 ];
@@ -57,7 +57,7 @@ const Footer = ({ onEnquiryClick }) => {
       <div className="footer-content" ref={contentRef}>
         <div className="footer-grid">
           <div className="footer-brand">
-            <img src="/assets/Logo/LOGO -14.png" alt="THE OPEN ROOM" className="footer-logo-img" />
+            <img src="/assets/Logo/LOGO -16.png" alt="THE OPEN ROOM" className="footer-logo-img" />
             <p className="footer-tagline">
               Elevating architectural education and professional practice through immersive studio experiences.
             </p>
@@ -109,7 +109,7 @@ const Footer = ({ onEnquiryClick }) => {
 
           <div className="footer-map">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15553.220615637812!2d80.162919!3d12.952315!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52675aeb55363f%3A0x491352dd8672f0dd!2sMH%20Cockpit%20-%20Aviation%20Academy!5e0!3m2!1sen!2sin!4v1778932360955!5m2!1sen!2sin" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1944.1462978995087!2d80.16316014547564!3d12.953119564921167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f25a5b44093%3A0x804dae9ac8a0f68a!2sThe%20Open%20Room!5e0!3m2!1sen!2sin!4v1779085427541!5m2!1sen!2sin" 
               width="100%" 
               height="200" 
               style={{ border: 0, borderRadius: '8px', opacity: 0.8 }} 
@@ -123,10 +123,9 @@ const Footer = ({ onEnquiryClick }) => {
 
         <div className="footer-bottom border-t border-black/5 pt-8 mt-12">
           <p>&copy; {new Date().getFullYear()} The Open Room. All rights reserved.</p>
-          {/* <div className="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-          </div> */}
+          <a href="http://bmtechx.in/" target="_blank" rel="noopener noreferrer" style={{ color: '#999', textDecoration: 'none', fontSize: '0.85rem', transition: 'color 0.3s ease' }} onMouseEnter={e => e.target.style.color = '#ff4041'} onMouseLeave={e => e.target.style.color = '#999'}>
+            Built by <span style={{ fontWeight: 600 }}>BMTechx.in</span>
+          </a>
         </div>
       </div>
     </footer>

@@ -20,6 +20,8 @@ const App = () => {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -32,18 +34,15 @@ const App = () => {
       infinite: false,
     })
 
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
-
+    // Use GSAP's ticker instead of a separate RAF loop
     lenis.on('scroll', ScrollTrigger.update)
-
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000)
+    })
     gsap.ticker.lagSmoothing(0)
 
     return () => {
+      gsap.ticker.remove(lenis.raf)
       lenis.destroy()
     }
   }, [])

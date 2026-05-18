@@ -1,52 +1,27 @@
 import React, { useLayoutEffect, useRef} from "react";
-import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const FloatingShape = ({ position, color, type }) => {
-  const meshRef = useRef();
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1;
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
-    }
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-      <mesh position={position} ref={meshRef}>
-        {type === 'box' ? <boxGeometry args={[1, 1, 1]} /> : <torusGeometry args={[0.6, 0.2, 16, 100]} />}
-        <meshStandardMaterial color={color} transparent opacity={0.1} wireframe />
-      </mesh>
-    </Float>
-  );
-};
-
-const BackgroundShapes = () => (
-  <div className="absolute inset-0 pointer-events-none overflow-hidden">
-    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <FloatingShape position={[-5, 2, 0]} color="#ff4041" type="box" />
-      <FloatingShape position={[-6, -2, -2]} color="#000000" type="torus" />
-      <FloatingShape position={[5, -2, 0]} color="#ff4041" type="box" />
-      <FloatingShape position={[6, 2, -1]} color="#000000" type="torus" />
-    </Canvas>
-  </div>
-);
-
-
 
 const AcademicPrograms = () => {
   const containerRef = useRef(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+      // Section label reveal (replaces Framer Motion whileInView)
+      gsap.from(".ap-section-label", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".ap-section-label",
+          start: "top 95%",
+          once: true,
+        },
+      });
+
       // Heading Mask Reveal
       const headingLines =
         containerRef.current.querySelectorAll(".reveal-line");
@@ -104,22 +79,16 @@ const AcademicPrograms = () => {
       id="nata-excellence"
       className="bg-[#fbf9e3] py-16 md:py-24 font-sans text-black overflow-hidden border-t border-black/5 relative"
     >
-      <BackgroundShapes />
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         {/* Main Header Section - Centered Excellence Style */}
         <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-6 mb-8"
-          >
+          <div className="ap-section-label flex items-center gap-6 mb-8">
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
             <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">
               NATA Coaching
             </span>
             <div className="w-12 h-[1px] bg-[#ff4041]"></div>
-          </motion.div>
+          </div>
 
           <h2 className="text-5xl md:text-7xl font-serif leading-[1.1] tracking-tight text-black perspective-1000 mb-8 md:mb-12">
             <div className="overflow-hidden pb-4">
