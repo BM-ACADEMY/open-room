@@ -47,7 +47,9 @@ const Services = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia(containerRef);
+
+    mm.add("(min-width: 1024px)", () => {
       const cards = gsap.utils.toArray('.service-stacking-card');
       
       cards.forEach((card, index) => {
@@ -69,9 +71,9 @@ const Services = () => {
           }
         });
       });
-    }, containerRef);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
@@ -104,7 +106,7 @@ const Services = () => {
           {servicesData.map((service, index) => (
             <div 
               key={index}
-              className="service-stacking-card sticky top-32 w-full bg-[#ff4041] p-10 md:p-16 text-white min-h-[40vh] md:min-h-[45vh] shadow-2xl relative overflow-hidden flex flex-col justify-center border border-white/10"
+              className="service-stacking-card lg:sticky lg:top-32 w-full bg-[#ff4041] p-10 md:p-16 text-white min-h-[40vh] md:min-h-[45vh] shadow-2xl relative overflow-hidden flex flex-col justify-center border border-white/10"
               style={{ zIndex: index + 1 }}
             >
               {/* Service Number Background */}
