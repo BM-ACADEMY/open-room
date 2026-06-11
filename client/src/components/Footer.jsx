@@ -98,6 +98,9 @@ const Footer = ({ onEnquiryClick }) => {
             <div className="footer-contact-item">
               <a href="mailto:info@theopenroom.in">info@theopenroom.in</a>
             </div>
+            <div className="footer-contact-item">
+              <a href="tel:9500627098">+91 95006 27098</a>
+            </div>
             <div className="footer-contact-item text-white/60 font-light text-sm">
               <span>
                 8th Floor, Tower A, Featherlite The Address,<br />
