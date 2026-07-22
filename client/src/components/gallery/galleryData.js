@@ -14,9 +14,9 @@ const architecture = [
   { id: "arch-06", image: "/gallery/arch6.webp", title: "Architecture Project 06", category: "architecture" },
   { id: "arch-07", image: "/gallery/arch7.webp", title: "Architecture Project 07", category: "architecture" },
   { id: "arch-08", image: "/gallery/arch8.webp", title: "Architecture Project 08", category: "architecture" },
-  { id: "arch-09", image: "/gallery/WhatsApp Image 2026-07-22 at 12.02.31 PM.webp", title: "Architecture Project 09", category: "architecture" },
-  { id: "arch-10", image: "/gallery/WhatsApp Image 2026-07-22 at 12.02.32 PM.webp", title: "Architecture Project 10", category: "architecture" },
-
+  { id: "arch-09", image: "/gallery/arch9.webp", title: "Architecture Project 09", category: "architecture" },
+  { id: "arch-10", image: "/gallery/arch10.webp", title: "Architecture Project 10", category: "architecture" },
+  { id: "arch-11", image: "/gallery/arch11.webp", title: "Architecture Project 11", category: "architecture" },
 ];
 
 const edTech = [

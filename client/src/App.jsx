@@ -61,9 +61,9 @@ const App = () => {
               <About />
               <Services />
               <AcademicPrograms />
+              <GallerySection />
               <NataCoaching/>
               <Collaborations />
-              <GallerySection />
               <MeetOurTeam />
               <FAQ />
               <Footer onEnquiryClick={() => setIsEnquiryOpen(true)} />
