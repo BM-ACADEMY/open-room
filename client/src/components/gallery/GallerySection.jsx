@@ -133,10 +133,6 @@ const GalleryCard = ({ item, onOpen }) => {
         </div>
       </div>
 
-      {/* Title */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-        <p className="text-white text-xs md:text-sm font-semibold tracking-wide truncate">{item.title}</p>
-      </div>
     </motion.div>
   );
 };

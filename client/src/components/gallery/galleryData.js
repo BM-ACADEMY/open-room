@@ -40,6 +40,7 @@ const studio = [
   { id: "studio-03", image: "/gallery/off3.webp", title: "Studio Moment 03", category: "studio" },
   { id: "studio-04", image: "/gallery/off4.webp", title: "Studio Moment 04", category: "studio" },
   { id: "studio-05", image: "/gallery/off5.webp", title: "Studio Moment 05", category: "studio" },
+  { id: "studio-06", image: "/gallery/off6.webp", title: "Studio Moment 06", category: "studio" },
 ];
 
 export const galleryImages = [...architecture, ...edTech, ...studio];
