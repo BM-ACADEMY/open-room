@@ -15,6 +15,7 @@ import Awards from './pages/Awards'
 import Footer from './components/Footer'
 import EnquiryForm from './components/EnquiryForm'
 import NataCoaching from './components/NataCoaching'
+import GallerySection from './components/gallery/GallerySection'
 
 const App = () => {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
@@ -36,6 +37,7 @@ const App = () => {
 
     // Use GSAP's ticker instead of a separate RAF loop
     lenis.on('scroll', ScrollTrigger.update)
+    window.lenis = lenis;
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000)
     })
@@ -43,6 +45,7 @@ const App = () => {
 
     return () => {
       gsap.ticker.remove(lenis.raf)
+      window.lenis = undefined;
       lenis.destroy()
     }
   }, [])
@@ -60,6 +63,7 @@ const App = () => {
               <AcademicPrograms />
               <NataCoaching/>
               <Collaborations />
+              <GallerySection />
               <MeetOurTeam />
               <FAQ />
               <Footer onEnquiryClick={() => setIsEnquiryOpen(true)} />

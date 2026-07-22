@@ -1,4 +1,4 @@
-import React, { useRef, Suspense, useCallback } from 'react';
+import React, { useRef, Suspense, useCallback, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshWobbleMaterial, OrbitControls, Grid, PerspectiveCamera, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -100,50 +100,73 @@ const Cursor3D = () => {
 };
 
 const ThreeScene = ({ onReady }) => {
+  const containerRef = useRef();
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   const handleCreated = useCallback(() => {
-    // Signal ready immediately — no delay
     if (onReady) onReady();
   }, [onReady]);
 
   return (
-    <div className="absolute inset-0 z-0 cursor-pointer">
-      <Canvas 
-        dpr={[1, 1.5]} 
-        camera={{ position: [0, 0, 8], fov: 45 }} 
-        gl={{ alpha: true }} 
-        onCreated={handleCreated}
-      >
-        <Suspense fallback={null}>
-          <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={35} />
-          <ambientLight intensity={0.8} />
-          <directionalLight position={[10, 10, 10]} intensity={1} />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#C5A059" />
-          
-          <ArchitecturalForm />
-          <Cursor3D />
-          
-          <Grid 
-            infiniteGrid 
-            fadeDistance={45} 
-            fadeStrength={5} 
-            cellSize={1} 
-            sectionSize={5} 
-            sectionColor="#7A4B3A" 
-            sectionThickness={1.5}
-            cellColor="#1a1a1a"
-            cellThickness={0.5}
-            position={[0, -4.01, 0]}
-          />        
-          <OrbitControls 
-            enableZoom={false} 
-            enablePan={false} 
-            makeDefault 
-            minPolarAngle={Math.PI / 3} 
-            maxPolarAngle={Math.PI / 1.5}
-          />
-          <Environment files="/hdri/city.hdr" />
-        </Suspense>
-      </Canvas>
+    <div ref={containerRef} className="absolute inset-0 z-0 cursor-pointer">
+      {isVisible && (
+        <Canvas 
+          dpr={[1, 1.5]} 
+          camera={{ position: [0, 0, 8], fov: 45 }} 
+          gl={{ alpha: true }} 
+          onCreated={handleCreated}
+        >
+          <Suspense fallback={null}>
+            <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={35} />
+            <ambientLight intensity={0.8} />
+            <directionalLight position={[10, 10, 10]} intensity={1} />
+            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#C5A059" />
+            
+            <ArchitecturalForm />
+            <Cursor3D />
+            
+            <Grid 
+              infiniteGrid 
+              fadeDistance={45} 
+              fadeStrength={5} 
+              cellSize={1} 
+              sectionSize={5} 
+              sectionColor="#7A4B3A" 
+              sectionThickness={1.5}
+              cellColor="#1a1a1a"
+              cellThickness={0.5}
+              position={[0, -4.01, 0]}
+            />        
+            <OrbitControls 
+              enableZoom={false} 
+              enablePan={false} 
+              makeDefault 
+              minPolarAngle={Math.PI / 3} 
+              maxPolarAngle={Math.PI / 1.5}
+            />
+            <Environment files="/hdri/city.hdr" />
+          </Suspense>
+        </Canvas>
+      )}
     </div>
   );
 };
