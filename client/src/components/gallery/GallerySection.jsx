@@ -92,7 +92,9 @@ const GalleryTabs = ({ categories, active, onChange }) => {
 };
 
 // Sub-Component: GalleryCard
-const GalleryCard = ({ item, onOpen }) => {
+const GalleryCard = ({ item, index, onOpen }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -100,22 +102,34 @@ const GalleryCard = ({ item, onOpen }) => {
     }
   };
 
+  const isEager = index < 4;
+
   return (
     <motion.div
       variants={cardVariants}
-      className="group relative aspect-[4/5] rounded-[20px] overflow-hidden bg-white border border-black/5 shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.16)] transition-shadow duration-700 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4041]/60"
+      className="group relative aspect-[4/5] rounded-[20px] overflow-hidden bg-[#eeeeee] border border-black/5 shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.16)] transition-shadow duration-700 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4041]/60"
       onClick={onOpen}
       role="button"
       tabIndex={0}
       aria-label={`Open ${item.title} in full view`}
       onKeyDown={handleKeyDown}
     >
+      {/* Shimmer / Skeleton Loader */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-neutral-200 animate-pulse flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-t-[#ff4041] border-neutral-400 rounded-full animate-spin"></div>
+        </div>
+      )}
+
       <img
         src={item.image}
         alt={item.title}
-        loading="lazy"
+        loading={isEager ? "eager" : "lazy"}
         decoding="async"
-        className="w-full h-full object-cover brightness-95 transition-all duration-[1200ms] ease-out group-hover:scale-110 group-hover:brightness-100"
+        onLoad={() => setIsLoaded(true)}
+        className={`w-full h-full object-cover brightness-95 transition-all duration-[1200ms] ease-out group-hover:scale-110 group-hover:brightness-100 ${
+          isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+        }`}
       />
 
       {/* Overlay fade */}
@@ -150,7 +164,7 @@ const GalleryGrid = ({ pageKey, images, onOpenImage }) => {
         className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-8"
       >
         {images.map((item, index) => (
-          <GalleryCard key={item.id} item={item} onOpen={() => onOpenImage(index)} />
+          <GalleryCard key={item.id} item={item} index={index} onOpen={() => onOpenImage(index)} />
         ))}
       </motion.div>
     </AnimatePresence>

@@ -113,7 +113,10 @@ const Homepage = ({ onEnquiryClick }) => {
   const scrollToSection = useCallback((id) => {
     setIsMenuOpen(false);
     if (window.lenis) {
-      window.lenis.scrollTo('#' + id, { offset: -80 });
+      window.lenis.resize();
+      requestAnimationFrame(() => {
+        window.lenis.scrollTo('#' + id, { offset: -80 });
+      });
     } else {
       const element = document.getElementById(id);
       if (element) {
