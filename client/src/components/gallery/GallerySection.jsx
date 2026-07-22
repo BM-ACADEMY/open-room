@@ -313,8 +313,6 @@ const GalleryLightbox = ({ images, activeIndex, onClose, onNext, onPrev }) => {
               className="max-h-[75vh] w-auto max-w-full rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.5)] object-contain"
             />
             <div className="mt-5 flex items-center gap-4 text-white/80">
-              <span className="text-xs md:text-sm font-semibold tracking-wide">{item.title}</span>
-              <span className="w-1 h-1 rounded-full bg-white/40" />
               <span className="text-xs md:text-sm text-white/50">
                 {activeIndex + 1} / {images.length}
               </span>
