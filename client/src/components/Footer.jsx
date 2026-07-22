@@ -10,6 +10,7 @@ const navLinks = [
   { name: 'Architecture', id: 'services' },
   { name: 'NATA Coaching', id: 'nata-excellence' },
   { name: 'Academics', id: 'programs' },
+  { name: 'Gallery', id: 'gallery' },
   { name: 'Our Team', id: 'governance' },
   { name: 'Contact', id: 'contact' },
 ];
@@ -82,7 +83,7 @@ const Footer = ({ onEnquiryClick }) => {
           <div className="footer-links">
             <h3 className="footer-heading">Explore</h3>
             <ul>
-              {navLinks.slice(0, 5).map((link) => (
+              {navLinks.slice(0, 6).map((link) => (
                 <li key={link.name}>
                   <button onClick={() => scrollToSection(link.id)} className="footer-link-btn">
                     {link.name}

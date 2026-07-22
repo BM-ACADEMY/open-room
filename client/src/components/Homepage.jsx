@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'NATA Coaching', id: 'nata-excellence' },
   { name: 'Academics', id: 'programs' },
   { name: 'Our Team', id: 'governance' },
+  { name: 'Our Gallery', id: 'gallery' },
 ];
 
 const NavigationHeader = memo(({ isScrolled, setIsMenuOpen, onEnquiryClick, scrollToSection }) => (
@@ -250,7 +251,7 @@ const Homepage = ({ onEnquiryClick }) => {
               </button>
               
               <button 
-                onClick={() => scrollToSection('programs')} 
+                onClick={() => scrollToSection('nata-excellence')} 
                 className="group relative px-10 py-4 overflow-hidden rounded-full border border-black/20 bg-white/80 backdrop-blur-sm hover:border-[#ff4041] transition-colors duration-500 cursor-pointer"
               >
                 <div className="absolute inset-0 bg-[#ff4041] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
