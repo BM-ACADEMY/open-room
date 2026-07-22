@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'NATA Coaching', id: 'nata-excellence' },
   { name: 'Academics', id: 'programs' },
   { name: 'Our Team', id: 'governance' },
+  { name: 'Our Gallery', id: 'gallery' },
 ];
 
 const NavigationHeader = memo(({ isScrolled, setIsMenuOpen, onEnquiryClick, scrollToSection }) => (
