@@ -39,7 +39,7 @@ const studio = [
   { id: "studio-02", image: "/gallery/off2.webp", title: "Studio Moment 02", category: "studio" },
   { id: "studio-03", image: "/gallery/off3.webp", title: "Studio Moment 03", category: "studio" },
   { id: "studio-04", image: "/gallery/off4.webp", title: "Studio Moment 04", category: "studio" },
-  { id: "studio-05", image: "/gallery/off5.webp", title: "Studio Moment 05", category: "studio" },
+  // { id: "studio-05", image: "/gallery/off5.webp", title: "Studio Moment 05", category: "studio" },
   { id: "studio-06", image: "/gallery/off6.webp", title: "Studio Moment 06", category: "studio" },
   { id: "studio-07", image: "/gallery/off7.webp", title: "Studio Moment 07", category: "studio" },
 ];
