@@ -380,18 +380,6 @@ const GallerySection = () => {
       <div className="max-w-7xl mx-auto px-8 md:px-24">
         {/* Header */}
         <div className="mb-16 md:mb-20 flex flex-col items-center text-center">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex items-center gap-6 mb-8"
-          >
-            <div className="w-12 h-[1px] bg-[#ff4041]" />
-            <span className="text-[#ff4041] text-[10px] font-bold uppercase tracking-[0.8em]">Our Work</span>
-            <div className="w-12 h-[1px] bg-[#ff4041]" />
-          </motion.div>
-
           <motion.h2
             variants={fadeUp}
             custom={0.1}
